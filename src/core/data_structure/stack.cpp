@@ -1,5 +1,7 @@
 #include "stack.h"
 
+#include "../exception/my_exception.h"
+
 namespace da_st {
 
     template<typename element_type>
@@ -8,9 +10,8 @@ namespace da_st {
         this->p_top = nullptr;
 
         this->stack_array = new element_type[stack_size];
-        if (this->stack_array == nullptr) {
-            // TODO: not enough memory exception
-        }
+        if (this->stack_array == nullptr)
+            throw my_exception("Not enough memory");
     }
 
     template<typename element_type>
@@ -38,10 +39,8 @@ namespace da_st {
 
     template<typename element_type>
     void stack<element_type>::push(element_type data) {
-        if (this->is_full()) {
-            // TODO: throw full exception
-            return;
-        }
+        if (this->is_full())
+            throw my_exception("Stack is full");
 
         this->stack_array[++this->top_index] = data;
         this->p_top = &data;
@@ -49,10 +48,8 @@ namespace da_st {
 
     template<typename element_type>
     void stack<element_type>::pop() {
-        if (this->is_empty()) {
-            // TODO: throw stack is empty, underflow condition
-            return;
-        }
+        if (this->is_empty())
+            throw my_exception("Stack is empty");
 
         --this->top_index;
     }
