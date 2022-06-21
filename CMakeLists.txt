@@ -3,4 +3,4 @@ project(GeneticAlgorithm)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(GeneticAlgorithm src/main.cpp src/genetic-algorithm/genetic_algorithm.cpp src/genetic-algorithm/genetic_algorithm.h src/util/my_string/my_string.cpp src/util/my_string/my_string.h src/core/data_structure/stack.cpp src/core/data_structure/stack.h)
+add_executable(GeneticAlgorithm src/main.cpp src/genetic-algorithm/genetic_algorithm.cpp src/genetic-algorithm/genetic_algorithm.h src/util/my_string/my_string.cpp src/util/my_string/my_string.h src/core/data_structure/stack.cpp src/core/data_structure/stack.h src/util/polish_notation/polish_notation.cpp src/util/polish_notation/polish_notation.h)
