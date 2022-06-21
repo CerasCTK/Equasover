@@ -7,7 +7,7 @@ namespace da_st {
         this->stack_size = stack_size;
         this->p_top = nullptr;
 
-        this->stack_array = new element_type(stack_size);
+        this->stack_array = new element_type[stack_size];
         if (this->stack_array == nullptr) {
             // TODO: not enough memory exception
         }
