@@ -8,7 +8,7 @@ private:
     char* error_message;
 
 public:
-    explicit my_exception(char* error_message);
+    explicit my_exception(const char* error_message);
 
     ~my_exception() noexcept override;
 

@@ -1,7 +1,9 @@
 #include "my_exception.h"
 
-my_exception::my_exception(char* error_message) {
-    this->error_message = error_message;
+#include "../../util/string_helper/string_helper.h"
+
+my_exception::my_exception(const char* error_message) {
+    util::string_helper::strcpy(this->error_message, error_message);
 }
 
 my_exception::~my_exception() noexcept {
@@ -9,5 +11,5 @@ my_exception::~my_exception() noexcept {
 }
 
 const char *my_exception::what() const noexcept {
-    return error_message;
+    return this->error_message;
 }
