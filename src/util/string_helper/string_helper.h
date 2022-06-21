@@ -6,8 +6,8 @@ namespace util {
     public:
         static char* strcpy(char* destination, const char* source);
 
-        static int strlen(char* string);
+        static int strlen(const char* string);
     };
-} // util
+}
 
 #endif //GENETICALGORITHM_STRING_HELPER_H
