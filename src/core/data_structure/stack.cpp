@@ -3,41 +3,40 @@
 #include "../exception/my_exception.h"
 
 namespace da_st {
-
-    template<typename element_type>
-    void stack<element_type>::init_stack(int stack_size) {
-        this->stack_size = stack_size;
+    template<class element_type>
+    void stack<element_type>::init_stack(int capacity) {
+        this->stack_capacity = capacity;
         this->p_top = nullptr;
 
-        this->stack_array = new element_type[stack_size];
+        this->stack_array = new element_type[capacity];
         if (this->stack_array == nullptr)
             throw my_exception("Not enough memory");
     }
 
-    template<typename element_type>
-    stack<element_type>::stack(int stack_size) {
-        this->init_stack(stack_size);
+    template<class element_type>
+    stack<element_type>::stack(int capacity) {
+        this->init_stack(capacity);
     }
 
-    template<typename element_type>
+    template<class element_type>
     stack<element_type>::~stack() {
         delete this->p_top;
         delete this->stack_array;
     }
 
-    template<typename element_type>
+    template<class element_type>
     bool stack<element_type>::is_empty() {
         if (this->top_index == -1 || this->p_top == nullptr) return true;
         return false;
     }
 
-    template<typename element_type>
+    template<class element_type>
     bool stack<element_type>::is_full() {
-        if (this->top_index >= this->stack_size - 1) return true;
+        if (this->top_index >= this->stack_capacity - 1) return true;
         return false;
     }
 
-    template<typename element_type>
+    template<class element_type>
     void stack<element_type>::push(element_type data) {
         if (this->is_full())
             throw my_exception("Stack is full");
@@ -46,19 +45,27 @@ namespace da_st {
         this->p_top = &data;
     }
 
-    template<typename element_type>
+    template<class element_type>
     void stack<element_type>::pop() {
         if (this->is_empty())
             throw my_exception("Stack is empty");
 
-        --this->top_index;
+        this->p_top = &this->stack_array[--this->top_index];
     }
 
-    template<typename element_type>
-    element_type *stack<element_type>::top() {
-        if (this->is_empty()) return nullptr;
-        return p_top;
+    template<class element_type>
+    element_type stack<element_type>::top() {
+        if (this->is_empty()) throw my_exception("Stack is empty");
+        return *p_top;
     }
+
+    template class stack<bool>;
+    template class stack<char>;
+    template class stack<short>;
+    template class stack<int>;
+    template class stack<long>;
+    template class stack<float>;
+    template class stack<double>;
 }
 
 

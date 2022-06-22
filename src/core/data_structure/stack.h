@@ -2,17 +2,17 @@
 #define GENETICALGORITHM_STACK_H
 
 namespace da_st {
-    template<typename element_type>
+    template<class element_type>
     class stack {
     private:
         element_type* p_top;
         int top_index {-1};
-        int stack_size;
+        int stack_capacity;
         element_type* stack_array;
 
-        void init_stack(int stack_size);
+        void init_stack(int capacity);
     public:
-        explicit stack(int stack_size);
+        explicit stack(int capacity);
 
         ~stack();
 
@@ -24,7 +24,7 @@ namespace da_st {
 
         void pop();
 
-        element_type* top();
+        element_type top();
     };
 }
 
