@@ -3,8 +3,6 @@
 
 class genetic_algorithm {
 private:
-
-
     genetic_algorithm() = default;
 public:
     static genetic_algorithm* init_ga();

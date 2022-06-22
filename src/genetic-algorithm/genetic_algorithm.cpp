@@ -7,3 +7,7 @@ genetic_algorithm* genetic_algorithm::init_ga() {
 genetic_algorithm* genetic_algorithm::init_population() {
     return this;
 }
+
+genetic_algorithm::~genetic_algorithm() {
+
+}
