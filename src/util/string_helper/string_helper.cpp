@@ -13,7 +13,9 @@ namespace util {
 
         *destination = '\0';
 
-        return p_string;
+        destination = p_string;
+
+        return destination;
     }
 
     int string_helper::strlen(const char* string) {
