@@ -6,7 +6,6 @@
 class my_exception : public std::exception {
 private:
     char* error_message;
-
 public:
     explicit my_exception(const char* error_message);
 
