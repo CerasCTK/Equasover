@@ -20,8 +20,11 @@ namespace da_st {
 
     template<class element_type>
     stack<element_type>::~stack() {
-        delete this->p_top;
-        delete this->stack_array;
+        if (this->p_top != nullptr)
+            delete this->p_top;
+
+        if (this->stack_array != nullptr)
+            delete this->stack_array;
     }
 
     template<class element_type>
@@ -50,7 +53,9 @@ namespace da_st {
         if (this->is_empty())
             throw my_exception("Stack is empty");
 
-        this->p_top = &this->stack_array[--this->top_index];
+        --this->top_index;
+        if (this->top_index < 0) this->p_top = nullptr;
+        else this->p_top = &this->stack_array[this->top_index];
     }
 
     template<class element_type>
