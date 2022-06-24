@@ -2,7 +2,7 @@
 
 #include "../../core/exception/my_exception.h"
 
-#include "../string_helper/string_helper.h"
+#include "../../util/string_helper/string_helper.h"
 
 namespace util {
     polish_notation* polish_notation::get_polish() {
@@ -22,7 +22,7 @@ namespace util {
     }
 
     polish_notation* polish_notation::init_variable_list(const char* variables) {
-        int variablesa {0};
+
 
         return this;
     }
@@ -32,5 +32,16 @@ namespace util {
         if (this->variable_list == nullptr) throw my_exception("The variable list is null");
 
         return 0;
+    }
+
+    polish_notation::~polish_notation() {
+        if (this->function_string != nullptr)
+            delete this->function_string;
+
+        if (this->variable_list != nullptr)
+            delete this->variable_list;
+
+        if (this->function_polish_form != nullptr)
+            delete this->function_polish_form;
     }
 }

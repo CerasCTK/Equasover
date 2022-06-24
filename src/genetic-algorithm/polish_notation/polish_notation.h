@@ -6,6 +6,7 @@ namespace util {
     private:
         char* function_string;
         char* variable_list;
+        char* function_polish_form;
 
         polish_notation() = default;
     public:
@@ -16,6 +17,8 @@ namespace util {
         polish_notation* init_variable_list(const char* variables);
 
         double calculate();
+
+        ~polish_notation();
     };
 }
 
