@@ -4,10 +4,12 @@
 
 #include "../../core/exception/my_exception.h"
 
-namespace util {
-    char* string_helper::strcpy(char* destination, const char* source) {
+namespace string_helper {
+    char* strcpy(char* destination, const char* source) {
         if (destination == nullptr)
             throw my_exception("Destination is null");
+
+        // TODO: destination not enough memory
 
         char* p_string = destination;
 
@@ -17,23 +19,21 @@ namespace util {
 
         *destination = '\0';
 
-        destination = p_string;
-
-        return destination;
+        return p_string;
     }
 
-    int string_helper::strlen(const char* string) {
+    int strlen(const char* text) {
         int length {0};
 
-        while (*string != '\0') {
+        while (*text != '\0') {
             length++;
-            string++;
+            text++;
         }
 
         return length;
     }
 
-    void string_helper::get_text(char* container, const int number_of_chars, char stop_char) {
+    void get_text(char* container, const int number_of_chars, char stop_char) {
         if (container == nullptr) throw my_exception("Container is null");
 
         char c;
@@ -50,5 +50,34 @@ namespace util {
             *(container++) = c;
             counter++;
         }
+    }
+
+    char** split(const char* text, char split_char) {
+        int container_size = count_char(text, split_char);
+
+        char** container = new char*[container_size + 1];
+
+        while (*text != '\0') {
+
+
+        }
+
+        return container;
+    }
+
+    int count_char(const char* text, char character) {
+        int counter {0};
+        while (*text != '\0') {
+            if (*(text++) == character) counter++;
+        }
+        return counter;
+    }
+
+    int pos(const char* text, char character) {
+        int counter {0};
+
+        while (*(text++) != character) counter++;
+
+        return counter;
     }
 }
