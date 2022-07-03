@@ -12,6 +12,9 @@ out/
 # CMake
 cmake-build-*/
 
+# Documents
+docs/
+
 # Prerequisites
 *.d
 
