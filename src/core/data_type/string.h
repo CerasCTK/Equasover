@@ -7,7 +7,6 @@ namespace da_ty {
     class string {
     private:
         char* data;
-        int string_length;
     public:
         string();
 
@@ -23,9 +22,13 @@ namespace da_ty {
 
         char* c_str();
 
-        friend std::ostream& operator<<(std::ostream& output, const string& string);
+        friend std::ostream& operator<<(std::ostream& os, const string& obj);
 
-        friend std::istream& operator>>(std::istream& input, string& string);
+        friend std::istream& operator>>(std::istream& is, string& obj);
+
+        string& operator=(const string& other);
+
+        friend string operator+(const string& left, const string& right);
     };
 }
 
