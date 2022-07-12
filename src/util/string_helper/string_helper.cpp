@@ -5,13 +5,13 @@
 #include "../../core/exception/my_exception.h"
 
 namespace string_helper {
-    char* strcpy(char* destination, const char* source) {
+    char *strcpy(char *destination, const char *source) {
         if (destination == nullptr)
             throw my_exception("Destination is null");
 
         // TODO: destination not enough memory
 
-        char* p_string = destination;
+        char *p_string = destination;
 
         while (*source != '\0') {
             *(destination++) = *(source++);
@@ -22,8 +22,12 @@ namespace string_helper {
         return p_string;
     }
 
-    int strlen(const char* text) {
-        int length {0};
+    char *strcat(char *destination, const char *source) {
+        return nullptr;
+    }
+
+    int strlen(const char *text) {
+        int length{0};
 
         while (*text != '\0') {
             length++;
@@ -33,7 +37,7 @@ namespace string_helper {
         return length;
     }
 
-    void get_text(char* container, const int number_of_chars, char stop_char) {
+    void get_text(char *container, const int number_of_chars, char stop_char) {
         if (container == nullptr) throw my_exception("Container is null");
 
         char c;
@@ -52,10 +56,10 @@ namespace string_helper {
         }
     }
 
-    char** split(const char* text, char split_char) {
+    char **split(const char *text, char split_char) {
         int container_size = count_char(text, split_char);
 
-        char** container = new char*[container_size + 1];
+        char **container = new char *[container_size + 1];
 
         while (*text != '\0') {
 
@@ -65,16 +69,16 @@ namespace string_helper {
         return container;
     }
 
-    int count_char(const char* text, char character) {
-        int counter {0};
+    int count_char(const char *text, char character) {
+        int counter{0};
         while (*text != '\0') {
             if (*(text++) == character) counter++;
         }
         return counter;
     }
 
-    int pos(const char* text, char character) {
-        int counter {0};
+    int pos(const char *text, char character) {
+        int counter{0};
 
         while (*(text++) != character) counter++;
 

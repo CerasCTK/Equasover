@@ -7,16 +7,17 @@ namespace da_st {
     private:
         static const int C_DEFAULT_SIZE = 10;
 
-        int list_size {C_DEFAULT_SIZE};
-        element_type* obj_list;
+        int list_size{C_DEFAULT_SIZE};
+        element_type *obj_list;
 
-        int top_index {-1};
+        int top_index{-1};
 
         void resize();
 
         bool need_to_resize();
 
         void init_array_list(int size);
+
     public:
         array_list();
 
@@ -44,4 +45,4 @@ namespace da_st {
     };
 }
 
-#endif //GENETICALGORITHM_ARRAY_LIST_H
+#endif

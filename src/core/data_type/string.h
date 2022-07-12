@@ -6,31 +6,31 @@
 namespace da_ty {
     class string {
     private:
-        char* data;
+        char *data;
     public:
         string();
 
-        string(const char* data);
+        string(const char *data);
 
-        string(const string& other);
+        string(const string &other);
 
-        string(string&& other);
+        string(string &&other);
 
         ~string();
 
         int get_length();
 
-        char* c_str();
+        char *c_str();
 
-        friend std::ostream& operator<<(std::ostream& os, const string& obj);
+        friend std::ostream &operator<<(std::ostream &os, const string &obj);
 
-        friend std::istream& operator>>(std::istream& is, string& obj);
+        friend std::istream &operator>>(std::istream &is, string &obj);
 
-        string& operator=(const string& other);
+        string &operator=(const string &other);
 
-        friend string operator+(const string& left, const string& right);
+        friend string operator+(const string &left, const string &right);
     };
 }
 
 
-#endif //GENETICALGORITHM_STRING_H
+#endif

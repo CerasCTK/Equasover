@@ -5,13 +5,13 @@
 #include "../../util/string_helper/string_helper.h"
 
 namespace util {
-    polish_notation* polish_notation::get_polish() {
-        polish_notation* po_no = new polish_notation;
+    polish_notation *polish_notation::get_polish() {
+        polish_notation *po_no = new polish_notation;
 
         return po_no;
     }
 
-    polish_notation* polish_notation::add_function(const char* function) {
+    polish_notation *polish_notation::add_function(const char *function) {
         const int function_length = string_helper::strlen(function);
 
         this->function_string = new char[function_length + 1];
@@ -21,7 +21,7 @@ namespace util {
         return this;
     }
 
-    polish_notation* polish_notation::init_variable_list(const char* variables) {
+    polish_notation *polish_notation::init_variable_list(const char *variables) {
 
 
         return this;

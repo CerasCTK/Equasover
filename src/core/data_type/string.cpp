@@ -13,7 +13,7 @@ namespace da_ty {
         *this->data = '\0';
     }
 
-    string::string(const char* data) {
+    string::string(const char *data) {
         if (data == nullptr) {
             this->data = new char;
             *this->data = '\0';
@@ -25,7 +25,7 @@ namespace da_ty {
         }
     }
 
-    string::string(const string& other) {
+    string::string(const string &other) {
         int string_length = string_helper::strlen(other.data) + 1;
 
         this->data = new char[string_length];
@@ -34,7 +34,7 @@ namespace da_ty {
         *(this->data + string_length - 1) = '\0';
     }
 
-    string::string(string&& other) {
+    string::string(string &&other) {
         this->data = other.data;
         other.data = nullptr;
     }
@@ -48,17 +48,17 @@ namespace da_ty {
         return string_helper::strlen(this->data);
     }
 
-    char* string::c_str() {
+    char *string::c_str() {
         return this->data;
     }
 
-    std::ostream& operator<<(std::ostream& os, const string& obj) {
+    std::ostream &operator<<(std::ostream &os, const string &obj) {
         os << obj.data;
         return os;
     }
 
-    std::istream& operator>>(std::istream& is, string& obj) {
-        char* buff = new char[MAX_STRING_LENGTH_DEFAULT];
+    std::istream &operator>>(std::istream &is, string &obj) {
+        char *buff = new char[MAX_STRING_LENGTH_DEFAULT];
         memset(&buff[0], 0, sizeof(buff));
         is >> reinterpret_cast<bool &>(buff);
         obj = string{buff};
@@ -66,7 +66,7 @@ namespace da_ty {
         return is;
     }
 
-    string& string::operator=(const string& other) {
+    string &string::operator=(const string &other) {
         if (this == &other)
             return *this;
 

@@ -4,17 +4,19 @@
 #include "../../core/data_type/string.h"
 
 namespace string_helper {
-    char* strcpy(char* destination, const char* source);
+    char *strcpy(char *destination, const char *source);
 
-    int strlen(const char* text);
+    char *strcat(char *destination, const char *source);
 
-    void get_text(char* container, const int number_of_chars, char stop_char = '\n');
+    int strlen(const char *text);
 
-    char** split(const char* text, char split_char);
+    void get_text(char *container, const int number_of_chars, char stop_char = '\n');
 
-    int count_char(const char* text, char character);
+    char **split(const char *text, char split_char);
 
-    int pos(const char* text, char character);
+    int count_char(const char *text, char character);
+
+    int pos(const char *text, char character);
 }
 
-#endif //GENETICALGORITHM_STRING_HELPER_H
+#endif

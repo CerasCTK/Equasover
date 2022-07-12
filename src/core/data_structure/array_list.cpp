@@ -38,7 +38,6 @@ namespace da_st {
         if (this->need_to_resize())
             this->resize();
 
-
     }
 
     template<class element_type>
@@ -62,9 +61,7 @@ namespace da_st {
 
     template<class element_type>
     bool array_list<element_type>::contains(element_type obj) {
-//        for (int i {0}; i <= this->top_index; i++)
-//            if (*(this->top_index + i) == obj) return true;
-
+        // TODO:
         return false;
     }
 
@@ -89,7 +86,6 @@ namespace da_st {
     void array_list<element_type>::remove(int index) {
         if (index > this->top_index)
             throw my_exception("Index out of bound");
-
         // TODO:
     }
 

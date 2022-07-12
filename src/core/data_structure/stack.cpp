@@ -64,13 +64,26 @@ namespace da_st {
         return *p_top;
     }
 
-    template class stack<bool>;
-    template class stack<char>;
-    template class stack<short>;
-    template class stack<int>;
-    template class stack<long>;
-    template class stack<float>;
-    template class stack<double>;
+    template
+    class stack<bool>;
+
+    template
+    class stack<char>;
+
+    template
+    class stack<short>;
+
+    template
+    class stack<int>;
+
+    template
+    class stack<long>;
+
+    template
+    class stack<float>;
+
+    template
+    class stack<double>;
 }
 
 
