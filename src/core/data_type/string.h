@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef GENETICALGORITHM_STRING_H
 #define GENETICALGORITHM_STRING_H
 
@@ -28,9 +30,10 @@ namespace da_ty {
 
         string &operator=(const string &other);
 
+        string &operator=(const char *text);
+
         friend string operator+(const string &left, const string &right);
     };
 }
-
 
 #endif

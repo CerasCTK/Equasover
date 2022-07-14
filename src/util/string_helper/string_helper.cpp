@@ -9,13 +9,10 @@ namespace string_helper {
         if (destination == nullptr)
             throw my_exception("Destination is null");
 
-        // TODO: destination not enough memory
-
         char *p_string = destination;
 
-        while (*source != '\0') {
+        while (*source != '\0')
             *(destination++) = *(source++);
-        }
 
         *destination = '\0';
 
@@ -23,7 +20,35 @@ namespace string_helper {
     }
 
     char *strcat(char *destination, const char *source) {
-        return nullptr;
+        if (destination == nullptr)
+            throw my_exception("Destination is null");
+
+        char *p_string = destination;
+
+        int end_char_index = strlen(destination);
+
+        destination += end_char_index;
+
+        while (*source != '\0')
+            *(destination++) = *(source++);
+
+        *destination = '\0';
+
+        return p_string;
+    }
+
+    bool strcmp(const char *first, const char *sec) {
+        if (first == nullptr || sec == nullptr)
+            return false;
+
+        if (strlen(first) != strlen(sec))
+            return false;
+
+        for (int i = 0; i < strlen(first); i++)
+            if (*(first + i) != *(sec + i))
+                return false;
+
+        return true;
     }
 
     int strlen(const char *text) {
@@ -54,19 +79,6 @@ namespace string_helper {
             *(container++) = c;
             counter++;
         }
-    }
-
-    char **split(const char *text, char split_char) {
-        int container_size = count_char(text, split_char);
-
-        char **container = new char *[container_size + 1];
-
-        while (*text != '\0') {
-
-
-        }
-
-        return container;
     }
 
     int count_char(const char *text, char character) {

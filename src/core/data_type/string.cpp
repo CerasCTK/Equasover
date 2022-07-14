@@ -77,9 +77,33 @@ namespace da_ty {
         return *this;
     }
 
+    string &string::operator=(const char *text) {
+        if (string_helper::strcmp(this->data, text))
+            return *this;
+
+        delete this->data;
+
+        int string_length = string_helper::strlen(text) + 1;
+        this->data = new char[string_length];
+        string_helper::strcpy(this->data, text);
+        return *this;
+    }
+
     string operator+(const string &left, const string &right) {
         int string_length = string_helper::strlen(left.data) + string_helper::strlen(right.data) + 1;
-        return string();
+
+        char *buff = new char[string_length];
+
+        string_helper::strcpy(buff, left.data);
+        string_helper::strcat(buff, right.data);
+
+        buff[string_length] = '\0';
+
+        string temp {buff};
+
+        delete[] buff;
+
+        return temp;
     }
 
 }
