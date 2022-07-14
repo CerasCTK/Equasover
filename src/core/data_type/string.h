@@ -8,11 +8,11 @@
 namespace da_ty {
     class string {
     private:
-        char *data;
+        uint8_t *data;
     public:
         string();
 
-        string(const char *data);
+        string(const uint8_t *data);
 
         string(const string &other);
 
@@ -20,9 +20,9 @@ namespace da_ty {
 
         ~string();
 
-        int get_length();
+        int32_t get_length();
 
-        char *c_str();
+        uint8_t *c_str();
 
         friend std::ostream &operator<<(std::ostream &os, const string &obj);
 
@@ -30,15 +30,15 @@ namespace da_ty {
 
         string &operator=(const string &other);
 
-        string &operator=(const char *text);
+        string &operator=(const uint8_t *text);
 
         friend string operator+(const string &left, const string &right);
 
-        friend string operator+(const string &left, const char *text);
+        friend string operator+(const string &left, const uint8_t *text);
 
         bool operator==(string other);
 
-        friend bool operator==(const string &obj, const char *text);
+        bool operator==(const uint8_t *text);
     };
 }
 

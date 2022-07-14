@@ -5,11 +5,11 @@
 #include "../../core/exception/my_exception.h"
 
 namespace string_helper {
-    char *strcpy(char *destination, const char *source) {
+    uint8_t *strcpy(uint8_t *destination, const uint8_t *source) {
         if (destination == nullptr)
-            throw my_exception("Destination is null");
+            throw my_exception((uint8_t *) ("Destination is null"));
 
-        char *p_string = destination;
+        uint8_t *p_string{destination};
 
         while (*source != '\0')
             *(destination++) = *(source++);
@@ -19,13 +19,13 @@ namespace string_helper {
         return p_string;
     }
 
-    char *strcat(char *destination, const char *source) {
+    uint8_t *strcat(uint8_t *destination, const uint8_t *source) {
         if (destination == nullptr)
-            throw my_exception("Destination is null");
+            throw my_exception((uint8_t *) ("Destination is null"));
 
-        char *p_string = destination;
+        uint8_t *p_string{destination};
 
-        int end_char_index = strlen(destination);
+        int32_t end_char_index{strlen(destination)};
 
         destination += end_char_index;
 
@@ -37,22 +37,22 @@ namespace string_helper {
         return p_string;
     }
 
-    bool strcmp(const char *first, const char *sec) {
+    bool strcmp(const uint8_t *first, const uint8_t *sec) {
         if (first == nullptr || sec == nullptr)
             return false;
 
         if (strlen(first) != strlen(sec))
             return false;
 
-        for (int i = 0; i < strlen(first); i++)
+        for (int32_t i = 0; i < strlen(first); i++)
             if (*(first + i) != *(sec + i))
                 return false;
 
         return true;
     }
 
-    int strlen(const char *text) {
-        int length{0};
+    int32_t strlen(const uint8_t *text) {
+        int32_t length{0};
 
         while (*text != '\0') {
             length++;
@@ -62,11 +62,11 @@ namespace string_helper {
         return length;
     }
 
-    void get_text(char *container, const int number_of_chars, char stop_char) {
-        if (container == nullptr) throw my_exception("Container is null");
+    void get_text(uint8_t *container, const int32_t number_of_chars, uint8_t stop_char) {
+        if (container == nullptr) throw my_exception((uint8_t *) ("Container is null"));
 
-        char c;
-        int counter = 0;
+        uint8_t c;
+        int32_t counter{0};
 
         while (true) {
             c = getchar();
@@ -81,16 +81,16 @@ namespace string_helper {
         }
     }
 
-    int count_char(const char *text, char character) {
-        int counter{0};
+    int32_t count_char(const uint8_t *text, uint8_t character) {
+        int32_t counter{0};
         while (*text != '\0') {
             if (*(text++) == character) counter++;
         }
         return counter;
     }
 
-    int pos(const char *text, char character) {
-        int counter{0};
+    int32_t pos(const uint8_t *text, uint8_t character) {
+        int32_t counter{0};
 
         while (*(text++) != character) counter++;
 

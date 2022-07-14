@@ -1,22 +1,24 @@
 #pragma once
 
+#include <cstdint>
+
 #ifndef GENETICALGORITHM_STRING_HELPER_H
 #define GENETICALGORITHM_STRING_HELPER_H
 
 namespace string_helper {
-    char *strcpy(char *destination, const char *source);
+    uint8_t *strcpy(uint8_t *destination, const uint8_t *source);
 
-    char *strcat(char *destination, const char *source);
+    uint8_t *strcat(uint8_t *destination, const uint8_t *source);
 
-    bool strcmp(const char *first, const char *sec);
+    bool strcmp(const uint8_t *first, const uint8_t *sec);
 
-    int strlen(const char *text);
+    int32_t strlen(const uint8_t *text);
 
-    void get_text(char *container, const int number_of_chars, char stop_char = '\n');
+    void get_text(uint8_t *container, const int32_t number_of_chars, uint8_t stop_char = '\n');
 
-    int count_char(const char *text, char character);
+    int32_t count_char(const uint8_t *text, uint8_t character);
 
-    int pos(const char *text, char character);
+    int32_t pos(const uint8_t *text, uint8_t character);
 }
 
 #endif

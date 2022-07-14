@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstdint>
+
 #ifndef GENETICALGORITHM_MY_EXCEPTION_H
 #define GENETICALGORITHM_MY_EXCEPTION_H
 
@@ -7,9 +9,9 @@
 
 class my_exception : public std::exception {
 private:
-    char *error_message;
+    uint8_t *error_message;
 public:
-    explicit my_exception(const char *error_message);
+    explicit my_exception(const uint8_t *error_message);
 
     ~my_exception() noexcept override;
 

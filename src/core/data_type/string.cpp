@@ -9,26 +9,26 @@
 
 namespace da_ty {
     string::string() {
-        this->data = new char;
+        this->data = new uint8_t;
         *this->data = '\0';
     }
 
-    string::string(const char *data) {
+    string::string(const uint8_t *data) {
         if (data == nullptr) {
-            this->data = new char;
+            this->data = new uint8_t;
             *this->data = '\0';
         } else {
-            int string_length = string_helper::strlen(data) + 1;
-            this->data = new char[string_length];
+            int32_t string_length{string_helper::strlen(data) + 1};
+            this->data = new uint8_t[string_length];
 
             string_helper::strcpy(this->data, data);
         }
     }
 
     string::string(const string &other) {
-        int string_length = string_helper::strlen(other.data) + 1;
+        int32_t string_length{string_helper::strlen(other.data) + 1};
 
-        this->data = new char[string_length];
+        this->data = new uint8_t[string_length];
 
         string_helper::strcpy(this->data, other.data);
         *(this->data + string_length - 1) = '\0';
@@ -48,7 +48,7 @@ namespace da_ty {
         return string_helper::strlen(this->data);
     }
 
-    char *string::c_str() {
+    uint8_t *string::c_str() {
         return this->data;
     }
 
@@ -58,7 +58,7 @@ namespace da_ty {
     }
 
     std::istream &operator>>(std::istream &is, string &obj) {
-        char *buff = new char[MAX_STRING_LENGTH_DEFAULT];
+        uint8_t *buff{new uint8_t[MAX_STRING_LENGTH_DEFAULT]};
         memset(&buff[0], 0, sizeof(buff));
         is >> reinterpret_cast<bool &>(buff);
         obj = string{buff};
@@ -71,28 +71,28 @@ namespace da_ty {
             return *this;
 
         delete this->data;
-        int string_length = string_helper::strlen(other.data) + 1;
-        this->data = new char[string_length];
+        int32_t string_length{string_helper::strlen(other.data) + 1};
+        this->data = new uint8_t[string_length];
         string_helper::strcpy(this->data, other.data);
         return *this;
     }
 
-    string &string::operator=(const char *text) {
+    string &string::operator=(const uint8_t *text) {
         if (string_helper::strcmp(this->data, text))
             return *this;
 
         delete this->data;
 
-        int string_length = string_helper::strlen(text) + 1;
-        this->data = new char[string_length];
+        int32_t string_length{string_helper::strlen(text) + 1};
+        this->data = new uint8_t[string_length];
         string_helper::strcpy(this->data, text);
         return *this;
     }
 
     string operator+(const string &left, const string &right) {
-        int string_length = string_helper::strlen(left.data) + string_helper::strlen(right.data) + 1;
+        int32_t string_length{string_helper::strlen(left.data) + string_helper::strlen(right.data) + 1};
 
-        char *buff = new char[string_length];
+        uint8_t *buff{new uint8_t[string_length]};
 
         string_helper::strcpy(buff, left.data);
         string_helper::strcat(buff, right.data);
@@ -106,10 +106,10 @@ namespace da_ty {
         return temp;
     }
 
-    string operator+(const string &left, const char *text) {
-        int string_length = string_helper::strlen(left.data) + string_helper::strlen(text) + 1;
+    string operator+(const string &left, const uint8_t *text) {
+        int32_t string_length{string_helper::strlen(left.data) + string_helper::strlen(text) + 1};
 
-        char *buff = new char[string_length];
+        uint8_t *buff{new uint8_t[string_length]};
 
         string_helper::strcpy(buff, left.data);
         string_helper::strcat(buff, text);
@@ -127,7 +127,7 @@ namespace da_ty {
         return string_helper::strcmp(this->data, other.data);
     }
 
-    bool operator==(const string &obj, const char *text) {
-        return string_helper::strcmp(obj.data, text);
+    bool string::operator==(const uint8_t *text) {
+        return string_helper::strcmp(this->data, text);
     }
 }

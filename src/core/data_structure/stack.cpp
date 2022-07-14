@@ -4,17 +4,17 @@
 
 namespace da_st {
     template<class element_type>
-    void stack<element_type>::init_stack(int capacity) {
+    void stack<element_type>::init_stack(int32_t capacity) {
         this->stack_capacity = capacity;
         this->p_top = nullptr;
 
         this->stack_array = new element_type[capacity];
         if (this->stack_array == nullptr)
-            throw my_exception("Not enough memory");
+            throw my_exception((uint8_t *) ("Not enough memory"));
     }
 
     template<class element_type>
-    stack<element_type>::stack(int capacity) {
+    stack<element_type>::stack(int32_t capacity) {
         this->init_stack(capacity);
     }
 
@@ -42,7 +42,7 @@ namespace da_st {
     template<class element_type>
     void stack<element_type>::push(element_type data) {
         if (this->is_full())
-            throw my_exception("Stack is full");
+            throw my_exception((uint8_t *) ("Stack is full"));
 
         this->stack_array[++this->top_index] = data;
         this->p_top = &data;
@@ -51,7 +51,7 @@ namespace da_st {
     template<class element_type>
     void stack<element_type>::pop() {
         if (this->is_empty())
-            throw my_exception("Stack is empty");
+            throw my_exception((uint8_t *) ("Stack is empty"));
 
         --this->top_index;
         if (this->top_index < 0) this->p_top = nullptr;
@@ -60,7 +60,7 @@ namespace da_st {
 
     template<class element_type>
     element_type stack<element_type>::top() {
-        if (this->is_empty()) throw my_exception("Stack is empty");
+        if (this->is_empty()) throw my_exception((uint8_t *) ("Stack is empty"));
         return *p_top;
     }
 
@@ -71,13 +71,16 @@ namespace da_st {
     class stack<char>;
 
     template
-    class stack<short>;
+    class stack<uint8_t>;
 
     template
-    class stack<int>;
+    class stack<int16_t>;
 
     template
-    class stack<long>;
+    class stack<int32_t>;
+
+    template
+    class stack<int64_t>;
 
     template
     class stack<float>;
