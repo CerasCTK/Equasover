@@ -5,6 +5,8 @@
 
 #include <iostream>
 
+#include <cstdint>
+
 namespace da_ty {
     class string {
     private:

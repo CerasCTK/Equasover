@@ -44,7 +44,7 @@ namespace string_helper {
         if (strlen(first) != strlen(sec))
             return false;
 
-        for (int32_t i = 0; i < strlen(first); i++)
+        for (int32_t i{0}; i < strlen(first); i++)
             if (*(first + i) != *(sec + i))
                 return false;
 

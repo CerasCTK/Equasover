@@ -1,9 +1,9 @@
 #pragma once
 
-#include <cstdint>
-
 #ifndef GENETICALGORITHM_POLISH_NOTATION_H
 #define GENETICALGORITHM_POLISH_NOTATION_H
+
+#include <cstdint>
 
 namespace util {
     class polish_notation {

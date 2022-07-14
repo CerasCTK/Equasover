@@ -1,11 +1,11 @@
 #pragma once
 
-#include <cstdint>
-
 #ifndef GENETICALGORITHM_MY_EXCEPTION_H
 #define GENETICALGORITHM_MY_EXCEPTION_H
 
 #include <exception>
+
+#include <cstdint>
 
 class my_exception : public std::exception {
 private:

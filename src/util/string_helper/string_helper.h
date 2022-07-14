@@ -1,9 +1,9 @@
 #pragma once
 
-#include <cstdint>
-
 #ifndef GENETICALGORITHM_STRING_HELPER_H
 #define GENETICALGORITHM_STRING_HELPER_H
+
+#include <cstdint>
 
 namespace string_helper {
     uint8_t *strcpy(uint8_t *destination, const uint8_t *source);

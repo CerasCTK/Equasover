@@ -1,7 +1,9 @@
-#include <cstdint>
+#pragma once
 
 #ifndef GENETICALGORITHM_MATH_HELPER_H
 #define GENETICALGORITHM_MATH_HELPER_H
+
+#include <cstdint>
 
 namespace math_helper {
     double abs(double n);

@@ -3,6 +3,8 @@
 #ifndef GENETICALGORITHM_GENETIC_ALGORITHM_H
 #define GENETICALGORITHM_GENETIC_ALGORITHM_H
 
+#include <cstdint>
+
 class genetic_algorithm {
 private:
     genetic_algorithm() = default;

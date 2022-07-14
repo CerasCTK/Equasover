@@ -1,9 +1,9 @@
 #pragma once
 
-#include <cstdint>
-
 #ifndef GENETICALGORITHM_STACK_H
 #define GENETICALGORITHM_STACK_H
+
+#include <cstdint>
 
 namespace da_st {
     template<class element_type>
