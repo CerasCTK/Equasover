@@ -1,16 +1,16 @@
 #pragma once
 
-#include <cstdint>
-
 #ifndef GENETICALGORITHM_ARRAY_LIST_H
 #define GENETICALGORITHM_ARRAY_LIST_H
+
+#include <cstdint>
+
+#define C_DEFAULT_SIZE 10
 
 namespace da_st {
     template<class element_type>
     class array_list {
     private:
-        static const int32_t C_DEFAULT_SIZE{10};
-
         int32_t list_size{C_DEFAULT_SIZE};
         element_type *obj_list;
 
@@ -46,6 +46,8 @@ namespace da_st {
         void remove(int32_t index);
 
         void remove(element_type obj);
+
+
     };
 }
 
