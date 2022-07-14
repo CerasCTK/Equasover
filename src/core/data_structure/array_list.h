@@ -29,6 +29,8 @@ namespace da_st {
 
         void add(element_type obj);
 
+        void add(element_type obj, int32_t index);
+
         int32_t get_list_size();
 
         element_type get(int32_t index);
