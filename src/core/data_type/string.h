@@ -33,6 +33,12 @@ namespace da_ty {
         string &operator=(const char *text);
 
         friend string operator+(const string &left, const string &right);
+
+        friend string operator+(const string &left, const char *text);
+
+        bool operator==(string other);
+
+        friend bool operator==(const string &obj, const char *text);
     };
 }
 

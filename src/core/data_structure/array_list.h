@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef GENETICALGORITHM_ARRAY_LIST_H
 #define GENETICALGORITHM_ARRAY_LIST_H
 

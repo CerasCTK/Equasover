@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef GENETICALGORITHM_MY_EXCEPTION_H
 #define GENETICALGORITHM_MY_EXCEPTION_H
 
@@ -13,6 +15,5 @@ public:
 
     const char *what() const noexcept override;
 };
-
 
 #endif

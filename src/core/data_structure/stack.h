@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef GENETICALGORITHM_STACK_H
 #define GENETICALGORITHM_STACK_H
 

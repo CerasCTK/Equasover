@@ -106,4 +106,28 @@ namespace da_ty {
         return temp;
     }
 
+    string operator+(const string &left, const char *text) {
+        int string_length = string_helper::strlen(left.data) + string_helper::strlen(text) + 1;
+
+        char *buff = new char[string_length];
+
+        string_helper::strcpy(buff, left.data);
+        string_helper::strcat(buff, text);
+
+        buff[string_length] = '\0';
+
+        string temp {buff};
+
+        delete[] buff;
+
+        return temp;
+    }
+
+    bool string::operator==(string other) {
+        return string_helper::strcmp(this->data, other.data);
+    }
+
+    bool operator==(const string &obj, const char *text) {
+        return string_helper::strcmp(obj.data, text);
+    }
 }
