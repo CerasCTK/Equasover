@@ -3,22 +3,22 @@
 #include <iostream>
 #include <cstring>
 
-#include "../../util/string_helper/string_helper.h"
+#include "../exception/my_exception.h"
 
-#define MAX_STRING_LENGTH_DEFAULT 1000
+#include "../../util/string_helper/string_helper.h"
 
 namespace da_ty {
     string::string() {
         this->data = new uint8_t;
-        *this->data = '\0';
+        *this->data = END_STRING_CHAR;
     }
 
     string::string(const uint8_t *data) {
         if (data == nullptr) {
             this->data = new uint8_t;
-            *this->data = '\0';
+            *this->data = END_STRING_CHAR;
         } else {
-            int32_t string_length{string_helper::strlen(data) + 1};
+            int32_t string_length{string_helper::strlen(data) + END_STRING_COUNT};
             this->data = new uint8_t[string_length];
 
             string_helper::strcpy(this->data, data);
@@ -26,12 +26,12 @@ namespace da_ty {
     }
 
     string::string(const string &other) {
-        int32_t string_length{string_helper::strlen(other.data) + 1};
+        int32_t string_length{string_helper::strlen(other.data) + END_STRING_COUNT};
 
         this->data = new uint8_t[string_length];
 
         string_helper::strcpy(this->data, other.data);
-        *(this->data + string_length - 1) = '\0';
+        *(this->data + string_length - 1) = END_STRING_CHAR;
     }
 
     string::string(string &&other) {
@@ -44,7 +44,7 @@ namespace da_ty {
             delete this->data;
     }
 
-    int string::get_length() {
+    int string::length() {
         return string_helper::strlen(this->data);
     }
 
@@ -71,7 +71,7 @@ namespace da_ty {
             return *this;
 
         delete this->data;
-        int32_t string_length{string_helper::strlen(other.data) + 1};
+        int32_t string_length{string_helper::strlen(other.data) + END_STRING_COUNT};
         this->data = new uint8_t[string_length];
         string_helper::strcpy(this->data, other.data);
         return *this;
@@ -83,21 +83,21 @@ namespace da_ty {
 
         delete this->data;
 
-        int32_t string_length{string_helper::strlen(text) + 1};
+        int32_t string_length{string_helper::strlen(text) + END_STRING_COUNT};
         this->data = new uint8_t[string_length];
         string_helper::strcpy(this->data, text);
         return *this;
     }
 
     string operator+(const string &left, const string &right) {
-        int32_t string_length{string_helper::strlen(left.data) + string_helper::strlen(right.data) + 1};
+        int32_t new_length{string_helper::strlen(left.data) + string_helper::strlen(right.data) + END_STRING_COUNT};
 
-        uint8_t *buff{new uint8_t[string_length]};
+        uint8_t *buff{new uint8_t[new_length]};
 
         string_helper::strcpy(buff, left.data);
         string_helper::strcat(buff, right.data);
 
-        buff[string_length] = '\0';
+        buff[new_length - 1] = END_STRING_CHAR;
 
         string temp {buff};
 
@@ -107,14 +107,14 @@ namespace da_ty {
     }
 
     string operator+(const string &left, const uint8_t *text) {
-        int32_t string_length{string_helper::strlen(left.data) + string_helper::strlen(text) + 1};
+        int32_t new_length{string_helper::strlen(left.data) + string_helper::strlen(text) + END_STRING_COUNT};
 
-        uint8_t *buff{new uint8_t[string_length]};
+        uint8_t *buff{new uint8_t[new_length]};
 
         string_helper::strcpy(buff, left.data);
         string_helper::strcat(buff, text);
 
-        buff[string_length] = '\0';
+        buff[new_length - 1] = END_STRING_CHAR;
 
         string temp {buff};
 
@@ -129,5 +129,40 @@ namespace da_ty {
 
     bool string::operator==(const uint8_t *text) {
         return string_helper::strcmp(this->data, text);
+    }
+
+    da_st::array_list<string> *string::split(const uint8_t split_char) {
+        using namespace da_st;
+        array_list<string> *list = new array_list<string>;
+
+        while (*(this->data) != '\0') {
+
+        }
+
+        return list;
+    }
+
+    uint8_t &string::at(int32_t index) {
+        if (index >= this->length())
+            throw my_exception((uint8_t *) ("Index out of bound"));
+        return *(this->data + index);
+    }
+
+    void string::push_back(uint8_t c) {
+        int32_t new_length{string_helper::strlen(this->data) + 1 + END_STRING_COUNT};
+
+        uint8_t *buff{new uint8_t[new_length]};
+        string_helper::strcpy(buff, this->data);
+        buff[new_length - 2] = c;
+        buff[new_length - 1] = END_STRING_CHAR;
+
+        delete this->data;
+
+        this->data = buff;
+    }
+
+    string string::clone() {
+
+        return string();
     }
 }

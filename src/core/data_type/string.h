@@ -7,8 +7,17 @@
 
 #include <cstdint>
 
+#include "../data_structure/array_list.h"
+
+#include "config/cloneable.h"
+
+#define MAX_STRING_LENGTH_DEFAULT 1000
+
+#define END_STRING_COUNT 1 // \0
+#define END_STRING_CHAR '\0'
+
 namespace da_ty {
-    class string {
+class string : public cloneable<string> {
     private:
         uint8_t *data;
     public:
@@ -22,9 +31,15 @@ namespace da_ty {
 
         ~string();
 
-        int32_t get_length();
+        int32_t length();
 
         uint8_t *c_str();
+
+        uint8_t &at(int32_t index);
+
+        void push_back(uint8_t c);
+
+        da_st::array_list<string> *split(const uint8_t split_char);
 
         friend std::ostream &operator<<(std::ostream &os, const string &obj);
 
@@ -41,6 +56,8 @@ namespace da_ty {
         bool operator==(string other);
 
         bool operator==(const uint8_t *text);
+
+        string clone();
     };
 }
 
