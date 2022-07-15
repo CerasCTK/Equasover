@@ -6,10 +6,11 @@
 #include <cstdint>
 
 #define C_DEFAULT_SIZE 10
+#define MAX_SIZE_THRESHOLD 1000
 
 namespace da_st {
     template<class element_type>
-    class array_list {
+    class [[maybe_unused]] array_list {
     private:
         int32_t list_size{C_DEFAULT_SIZE};
         element_type *obj_list;
@@ -29,9 +30,7 @@ namespace da_st {
 
         void add(element_type obj);
 
-        void add(element_type obj, int32_t index);
-
-        int32_t get_list_size();
+        int32_t size();
 
         element_type get(int32_t index);
 
@@ -46,10 +45,6 @@ namespace da_st {
         int32_t last_index_of(element_type obj);
 
         void remove(int32_t index);
-
-        void remove(element_type obj);
-
-
     };
 }
 

@@ -2,7 +2,7 @@
 
 #include "../exception/my_exception.h"
 
-#define MAX_SIZE_THRESHOLD 1000
+#include "../data_type/string.h"
 
 template<class type>
 void copy_array(type source, int32_t src_pos, type destination, int32_t des_pos, int32_t length);
@@ -62,26 +62,7 @@ namespace da_st {
     }
 
     template<class element_type>
-    void array_list<element_type>::add(element_type obj, int32_t index) {
-        if (index >= this->top_index + 1)
-            return;
-
-        int32_t new_arr_length{++this->top_index};
-
-        if (this->need_to_resize())
-            this->resize();
-
-        element_type *new_arr{new element_type[new_arr_length]};
-
-        copy_array(this->obj_list, 0, new_arr, 0, index);
-        *(new_arr + index) = obj;
-
-        int32_t num_of_remaining_elements{this->top_index - index - 1 - 1};
-        copy_array(this->obj_list, index, new_arr, index + 1, num_of_remaining_elements);
-    }
-
-    template<class element_type>
-    int32_t array_list<element_type>::get_list_size() {
+    int32_t array_list<element_type>::size() {
         if (this->top_index < 0) return 0;
         return this->top_index + 1;
     }
@@ -127,7 +108,7 @@ namespace da_st {
 
     template<class element_type>
     int32_t array_list<element_type>::last_index_of(element_type obj) {
-        for (int32_t i{this->top_index - 1}; i >= 0; i--)
+        for (int32_t i{this->top_index}; i >= 0; i--)
             if (*(this->obj_list + i) == obj) return i;
         return -1;
     }
@@ -151,25 +132,59 @@ namespace da_st {
         this->top_index -= 1;
     }
 
-    template<class element_type>
-    void array_list<element_type>::remove(element_type obj) {
-        int32_t obj_index{index_of(obj)};
+    template
+    class [[maybe_unused]] array_list<bool>;
 
-        if (obj_index < 0) return;
+    template
+    class [[maybe_unused]] array_list<bool *>;
 
-        int32_t new_arr_length{this->top_index - 1};
-        element_type *new_arr{new element_type[new_arr_length]};
+    template
+    class [[maybe_unused]] array_list<char>;
 
-        copy_array(this->obj_list, 0, new_arr, 0, obj_index);
+    template
+    class [[maybe_unused]] array_list<char *>;
 
-        int32_t num_of_remaining_elements{this->top_index - obj_index - 1};
-        copy_array(this->obj_list, obj_index + 1, new_arr, obj_index, num_of_remaining_elements);
+    template
+    class [[maybe_unused]] array_list<uint8_t>;
 
-        delete this->obj_list;
+    template
+    class [[maybe_unused]] array_list<uint8_t *>;
 
-        this->obj_list = new_arr;
-        this->top_index -= 1;
-    }
+    template
+    class [[maybe_unused]] array_list<int16_t>;
+
+    template
+    class [[maybe_unused]] array_list<int16_t *>;
+
+    template
+    class [[maybe_unused]] array_list<int32_t>;
+
+    template
+    class [[maybe_unused]] array_list<int32_t *>;
+
+    template
+    class [[maybe_unused]] array_list<int64_t>;
+
+    template
+    class [[maybe_unused]] array_list<int64_t *>;
+
+    template
+    class [[maybe_unused]] array_list<float>;
+
+    template
+    class [[maybe_unused]] array_list<float *>;
+
+    template
+    class [[maybe_unused]] array_list<double>;
+
+    template
+    class [[maybe_unused]] array_list<double *>;
+
+    template
+    class [[maybe_unused]] array_list<da_ty::string>;
+
+    template
+    class [[maybe_unused]] array_list<da_ty::string *>;
 }
 
 template<class type>
