@@ -133,58 +133,58 @@ namespace da_st {
     }
 
     template
-    class [[maybe_unused]] array_list<bool>;
+    class array_list<bool>;
 
     template
-    class [[maybe_unused]] array_list<bool *>;
+    class array_list<bool *>;
 
     template
-    class [[maybe_unused]] array_list<char>;
+    class array_list<char>;
 
     template
-    class [[maybe_unused]] array_list<char *>;
+    class array_list<char *>;
 
     template
-    class [[maybe_unused]] array_list<uint8_t>;
+    class array_list<uint8_t>;
 
     template
-    class [[maybe_unused]] array_list<uint8_t *>;
+    class array_list<uint8_t *>;
 
     template
-    class [[maybe_unused]] array_list<int16_t>;
+    class array_list<int16_t>;
 
     template
-    class [[maybe_unused]] array_list<int16_t *>;
+    class array_list<int16_t *>;
 
     template
-    class [[maybe_unused]] array_list<int32_t>;
+    class array_list<int32_t>;
 
     template
-    class [[maybe_unused]] array_list<int32_t *>;
+    class array_list<int32_t *>;
 
     template
-    class [[maybe_unused]] array_list<int64_t>;
+    class array_list<int64_t>;
 
     template
-    class [[maybe_unused]] array_list<int64_t *>;
+    class array_list<int64_t *>;
 
     template
-    class [[maybe_unused]] array_list<float>;
+    class array_list<float>;
 
     template
-    class [[maybe_unused]] array_list<float *>;
+    class array_list<float *>;
 
     template
-    class [[maybe_unused]] array_list<double>;
+    class array_list<double>;
 
     template
-    class [[maybe_unused]] array_list<double *>;
+    class array_list<double *>;
 
     template
-    class [[maybe_unused]] array_list<da_ty::string>;
+    class array_list<da_ty::string>;
 
     template
-    class [[maybe_unused]] array_list<da_ty::string *>;
+    class array_list<da_ty::string *>;
 }
 
 template<class type>

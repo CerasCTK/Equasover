@@ -10,7 +10,7 @@
 
 namespace da_st {
     template<class element_type>
-    class [[maybe_unused]] array_list {
+    class array_list {
     private:
         int32_t list_size{C_DEFAULT_SIZE};
         element_type *obj_list;
