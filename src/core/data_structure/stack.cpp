@@ -2,6 +2,8 @@
 
 #include "../exception/my_exception.h"
 
+#include "../data_type/string.h"
+
 namespace da_st {
     template<class element_type>
     void stack<element_type>::init_stack(int32_t capacity) {
@@ -68,25 +70,55 @@ namespace da_st {
     class stack<bool>;
 
     template
+    class stack<bool *>;
+
+    template
     class stack<char>;
+
+    template
+    class stack<char *>;
 
     template
     class stack<uint8_t>;
 
     template
+    class stack<uint8_t *>;
+
+    template
     class stack<int16_t>;
+
+    template
+    class stack<int16_t *>;
 
     template
     class stack<int32_t>;
 
     template
+    class stack<int32_t *>;
+
+    template
     class stack<int64_t>;
+
+    template
+    class stack<int64_t *>;
 
     template
     class stack<float>;
 
     template
+    class stack<float *>;
+
+    template
     class stack<double>;
+
+    template
+    class stack<double *>;
+
+    template
+    class stack<da_ty::string>;
+
+    template
+    class stack<da_ty::string *>;
 }
 
 
