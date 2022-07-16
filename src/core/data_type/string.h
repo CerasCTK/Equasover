@@ -35,7 +35,7 @@ namespace da_ty {
 
         string(const uint8_t *s, int32_t len);
 
-        string(uint32_t n, uint8_t c);
+        string(int32_t n, uint8_t c);
 
         string(string &&str) noexcept;
 

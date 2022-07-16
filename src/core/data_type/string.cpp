@@ -75,9 +75,10 @@ namespace da_ty {
         }
     }
 
-    string::string(uint32_t n, uint8_t c) {
-        // TODO: Fills the string with n consecutive copies of character c.
-        uint32_t str_data_len{n + END_STRING_COUNT};
+    string::string(int32_t n, uint8_t c) {
+        int32_t str_data_len{n + END_STRING_COUNT};
+
+        this->str_data = new uint8_t[str_data_len];
 
         for (int32_t i{0}; i < n; i++)
             *(this->str_data + i) = c;
@@ -99,10 +100,12 @@ namespace da_ty {
         if (this == &str)
             return *this;
 
-        delete this->str_data;
-        int32_t string_length{string_helper::strlen(str.str_data) + END_STRING_COUNT};
-        this->str_data = new uint8_t[string_length];
+        int32_t new_len{str.length() + END_STRING_COUNT};
+        this->str_data = new uint8_t[new_len];
         string_helper::strcpy(this->str_data, str.str_data);
+
+        *(this->str_data + new_len - 1) = END_STRING_CHAR;
+
         return *this;
     }
 
@@ -110,21 +113,21 @@ namespace da_ty {
         if (string_helper::strcmp(this->str_data, s))
             return *this;
 
-        delete this->str_data;
-
-        int32_t string_length{string_helper::strlen(s) + END_STRING_COUNT};
-        this->str_data = new uint8_t[string_length];
+        int32_t new_len{string_helper::strlen(s) + END_STRING_COUNT};
+        this->str_data = new uint8_t[new_len];
         string_helper::strcpy(this->str_data, s);
+
+        *(this->str_data + new_len - 1) = END_STRING_CHAR;
+
         return *this;
     }
 
     string &string::operator=(uint8_t c) {
-        if (this->str_data != nullptr)
-            delete this->str_data;
+        int32_t new_len{1 + END_STRING_COUNT};
 
-        this->str_data = new uint8_t[1 + END_STRING_COUNT];
+        this->str_data = new uint8_t[new_len];
         *this->str_data = c;
-        *(this->str_data + 1) = END_STRING_CHAR;
+        *(this->str_data + new_len - 1) = END_STRING_CHAR;
 
         return *this;
     }
@@ -157,15 +160,21 @@ namespace da_ty {
     }
 
     void string::clear() noexcept {
-        // TODO
+        this->str_data = new uint8_t;
+        *this->str_data = END_STRING_CHAR;
     }
 
     bool string::empty() const noexcept {
-        // TODO
+        if (this->str_data == nullptr || this->length() == 0)
+            return true;
+
+        return false;
     }
 
     uint8_t &string::operator[](int32_t pos) {
-        // TODO
+        if (pos >= this->length())
+            throw my_exception((uint8_t *) ("Index out of bound"));
+        return *(this->str_data + pos);
     }
 
     const uint8_t &string::operator[](int32_t pos) const {
@@ -187,19 +196,19 @@ namespace da_ty {
     }
 
     uint8_t &string::back() {
-        // TODO:
+        return *(this->str_data + this->length() - 1);
     }
 
     const uint8_t &string::back() const {
-        // TODO
+        return *(this->str_data + this->length() - 1);
     }
 
     uint8_t &string::front() {
-        // TODO
+        return *(this->str_data);
     }
 
     const uint8_t &string::front() const {
-        // TODO
+        return *(this->str_data);
     }
 
     string &string::operator+=(const string &str) {
@@ -235,20 +244,41 @@ namespace da_ty {
     }
 
     void string::push_back(uint8_t c) {
-        int32_t new_length{string_helper::strlen(this->str_data) + 1 + END_STRING_COUNT};
+        int32_t new_length{this->length() + 1 + END_STRING_COUNT};
 
         uint8_t *buff{new uint8_t[new_length]};
         string_helper::strcpy(buff, this->str_data);
         buff[new_length - 2] = c;
         buff[new_length - 1] = END_STRING_CHAR;
 
-        delete this->str_data;
-
         this->str_data = buff;
     }
 
     string &string::erase(int32_t pos, int32_t len) {
-        // TODO
+        int32_t str_data_len{this->length()};
+        int32_t nocfp{str_data_len - pos}; // number of chars from pos
+
+        len = ((len > nocfp) || len == NPOS) ? nocfp : len;
+
+        int32_t new_len{str_data_len - len + END_STRING_COUNT};
+        uint8_t *temp = new uint8_t[new_len];
+
+        for (int32_t i{0}; i < pos; i++)
+            *(temp + i) = *(this->str_data + i);
+
+        if (len != nocfp) {
+            int32_t new_pos_aft_del{pos + len};
+            int32_t chars_remaining{new_len - pos};
+
+            for (int32_t i{0}; i < chars_remaining; i++)
+                *(temp + i) = *(this->str_data + new_pos_aft_del + i);
+        }
+
+        *(temp + new_len - 1) = END_STRING_CHAR;
+
+        this->str_data = temp;
+
+        return *this;
     }
 
     string &string::replace(int32_t pos, int32_t len, const string &str, int32_t sub_pos, int32_t sub_len) {
@@ -268,7 +298,7 @@ namespace da_ty {
     }
 
     const uint8_t *string::data() const noexcept {
-        // TODO
+        return this->str_data;
     }
 
     int32_t string::copy(uint8_t *s, int32_t len, int32_t pos) const {
@@ -292,12 +322,32 @@ namespace da_ty {
     }
 
     string string::substr(int32_t pos, int32_t len) const {
-        // TODO
+        int32_t str_data_len{this->length()};
+        int32_t nocfp{str_data_len - pos}; // number of chars from pos
+
+        len = ((len > nocfp) || len == NPOS) ? nocfp : len;
+
+        int32_t new_len{str_data_len - len + END_STRING_COUNT};
+        uint8_t *temp = new uint8_t[new_len];
+
+        for (int32_t i{0}; i < pos; i++)
+            *(temp + i) = *(this->str_data + i);
+
+        if (len != nocfp) {
+            int32_t new_pos_aft_del{pos + len};
+            int32_t chars_remaining{new_len - pos};
+
+            for (int32_t i{0}; i < chars_remaining; i++)
+                *(temp + i) = *(this->str_data + new_pos_aft_del + i);
+        }
+
+        *(temp + new_len - 1) = END_STRING_CHAR;
+
+        return string(temp);
     }
 
     string operator+(const string &left, const string &right) {
-        int32_t new_length{
-                string_helper::strlen(left.str_data) + string_helper::strlen(right.str_data) + END_STRING_COUNT};
+        int32_t new_length{left.length() + right.length() + END_STRING_COUNT};
 
         uint8_t *buff{new uint8_t[new_length]};
 
@@ -416,9 +466,6 @@ namespace da_ty {
 
 
     void string::get_line() {
-        if (this->str_data != nullptr)
-            delete this->str_data;
-
         int32_t str_data_len{MAX_STRING_LENGTH_DEFAULT};
 
         this->str_data = new uint8_t[str_data_len];
@@ -447,12 +494,12 @@ namespace da_ty {
         while (*(this->str_data) != '\0') {
 
         }
-
+        // TODO
         return list;
     }
 
     string string::clone() {
-
+        // TODO
         return string();
     }
 }
