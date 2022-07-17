@@ -91,7 +91,7 @@ namespace da_ty {
 
         string &append(const uint8_t *s);
 
-        string &append(const uint8_t *s, size_t n);
+        string &append(const uint8_t *s, int32_t n);
 
         string &append(int32_t n, uint8_t c);
 

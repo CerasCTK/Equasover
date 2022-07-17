@@ -1,7 +1,6 @@
 #include "string.h"
 
 #include <iostream>
-#include <cstring>
 
 #include "../exception/my_exception.h"
 
@@ -110,7 +109,7 @@ namespace da_ty {
     }
 
     string &string::operator=(const uint8_t *s) {
-        if (string_helper::strcmp(this->str_data, s))
+        if (string_helper::strcmp(this->str_data, s) == 0)
             return *this;
 
         int32_t new_len{string_helper::strlen(s) + END_STRING_COUNT};
@@ -212,34 +211,94 @@ namespace da_ty {
     }
 
     string &string::operator+=(const string &str) {
-        // TODO:
+        int32_t new_len{this->length() + str.length() + END_STRING_COUNT};
+
+        uint8_t *buff{new uint8_t[new_len]};
+
+        string_helper::strcpy(buff, this->str_data);
+        string_helper::strcat(buff, str.str_data);
+
+        buff[new_len - 1] = END_STRING_CHAR;
+
+        this->str_data = buff;
+
+        return *this;
     }
 
     string &string::operator+=(const uint8_t *s) {
-        // TODO
+        int32_t new_len{this->length() + string_helper::strlen(s) + END_STRING_COUNT};
+
+        uint8_t *buff{new uint8_t[new_len]};
+
+        string_helper::strcpy(buff, this->str_data);
+        string_helper::strcat(buff, s);
+
+        buff[new_len - 1] = END_STRING_CHAR;
+
+        this->str_data = buff;
+
+        return *this;
     }
 
     string &string::operator+=(uint8_t c) {
-        // TODO
+        int32_t new_len{this->length() + 1 + END_STRING_COUNT};
+
+        uint8_t *buff{new uint8_t[new_len]};
+
+        string_helper::strcpy(buff, this->str_data);
+        buff[new_len - 2] = c;
+        buff[new_len - 1] = END_STRING_CHAR;
+
+        this->str_data = buff;
+
+        return *this;
     }
 
     string &string::append(const string &str) {
-        // TODO
+        int32_t new_len{this->length() + str.length() + END_STRING_COUNT};
+
+        uint8_t *buff{new uint8_t[new_len]};
+
+        string_helper::strcpy(buff, this->str_data);
+        string_helper::strcat(buff, str.str_data);
+
+        buff[new_len - 1] = END_STRING_CHAR;
+
+        this->str_data = buff;
+
+        return *this;
     }
 
     string &string::append(const string &str, int32_t sub_pos, int32_t sub_len) {
+
+        return *this;
         // TODO
     }
 
     string &string::append(const uint8_t *s) {
-        // TODO
+        int32_t new_len{this->length() + string_helper::strlen(s) + END_STRING_COUNT};
+
+        uint8_t *buff{new uint8_t[new_len]};
+
+        string_helper::strcpy(buff, this->str_data);
+        string_helper::strcat(buff, s);
+
+        buff[new_len - 1] = END_STRING_CHAR;
+
+        this->str_data = buff;
+
+        return *this;
     }
 
-    string &string::append(const uint8_t *s, size_t n) {
+    string &string::append(const uint8_t *s, int32_t n) {
+
+        return *this;
         // TODO
     }
 
     string &string::append(int32_t n, uint8_t c) {
+
+        return *this;
         // TODO
     }
 
@@ -261,36 +320,50 @@ namespace da_ty {
         len = ((len > nocfp) || len == NPOS) ? nocfp : len;
 
         int32_t new_len{str_data_len - len + END_STRING_COUNT};
-        uint8_t *temp = new uint8_t[new_len];
+        uint8_t *buff{new uint8_t[new_len]};
 
         for (int32_t i{0}; i < pos; i++)
-            *(temp + i) = *(this->str_data + i);
+            *(buff + i) = *(this->str_data + i);
 
         if (len != nocfp) {
             int32_t new_pos_aft_del{pos + len};
             int32_t chars_remaining{new_len - pos};
 
             for (int32_t i{0}; i < chars_remaining; i++)
-                *(temp + i) = *(this->str_data + new_pos_aft_del + i);
+                *(buff + i) = *(this->str_data + new_pos_aft_del + i);
         }
 
-        *(temp + new_len - 1) = END_STRING_CHAR;
+        *(buff + new_len - 1) = END_STRING_CHAR;
 
-        this->str_data = temp;
+        this->str_data = buff;
 
         return *this;
     }
 
     string &string::replace(int32_t pos, int32_t len, const string &str, int32_t sub_pos, int32_t sub_len) {
+
+        return *this;
         // TODO
     }
 
     void string::swap(string &str) {
-        // TODO:
+        uint8_t *temp{this->str_data};
+
+        this->str_data = str.str_data;
+        str.str_data = temp;
     }
 
     void string::pop_back() {
-        // TODO:
+        int32_t new_len{this->length() - 1 + END_STRING_COUNT};
+
+        uint8_t *buff{new uint8_t[new_len]};
+
+        for (int32_t i{0}; i < new_len; i++)
+            *(buff + i) = *(this->str_data + i);
+
+        *(buff + new_len - 1) = END_STRING_CHAR;
+
+        this->str_data = buff;
     }
 
     const uint8_t *string::c_str() const noexcept {
@@ -328,22 +401,26 @@ namespace da_ty {
         len = ((len > nocfp) || len == NPOS) ? nocfp : len;
 
         int32_t new_len{str_data_len - len + END_STRING_COUNT};
-        uint8_t *temp = new uint8_t[new_len];
+        uint8_t *buff{new uint8_t[new_len]};
 
         for (int32_t i{0}; i < pos; i++)
-            *(temp + i) = *(this->str_data + i);
+            *(buff + i) = *(this->str_data + i);
 
         if (len != nocfp) {
             int32_t new_pos_aft_del{pos + len};
             int32_t chars_remaining{new_len - pos};
 
             for (int32_t i{0}; i < chars_remaining; i++)
-                *(temp + i) = *(this->str_data + new_pos_aft_del + i);
+                *(buff + i) = *(this->str_data + new_pos_aft_del + i);
         }
 
-        *(temp + new_len - 1) = END_STRING_CHAR;
+        *(buff + new_len - 1) = END_STRING_CHAR;
 
-        return string(temp);
+        string temp(buff);
+
+        delete[] buff;
+
+        return temp;
     }
 
     string operator+(const string &left, const string &right) {
@@ -356,7 +433,7 @@ namespace da_ty {
 
         buff[new_length - 1] = END_STRING_CHAR;
 
-        string temp{buff};
+        string temp(buff);
 
         delete[] buff;
 
@@ -373,7 +450,7 @@ namespace da_ty {
 
         buff[new_length - 1] = END_STRING_CHAR;
 
-        string temp{buff};
+        string temp(buff);
 
         delete[] buff;
 
@@ -393,75 +470,75 @@ namespace da_ty {
     }
 
     bool operator==(const string &lhs, const string &rhs) noexcept {
-        // TODO
+        return string_helper::strcmp(lhs.str_data, rhs.str_data) == 0;
     }
 
     bool operator==(const uint8_t *lhs, const string &rhs) {
-        // TODO
+        return string_helper::strcmp(lhs, rhs.str_data) == 0;
     }
 
     bool operator==(const string &lhs, const uint8_t *rhs) {
-        // TODO
+        return string_helper::strcmp(lhs.str_data, rhs) == 0;
     }
 
     bool operator!=(const string &lhs, const string &rhs) noexcept {
-        // TODO
+        return string_helper::strcmp(lhs.str_data, rhs.str_data) != 0;
     }
 
     bool operator!=(const uint8_t *lhs, const string &rhs) {
-        // TODO
+        return string_helper::strcmp(lhs, rhs.str_data) != 0;
     }
 
     bool operator!=(const string &lhs, const uint8_t *rhs) {
-        // TODO
+        return string_helper::strcmp(lhs.str_data, rhs) != 0;
     }
 
     bool operator<(const string &lhs, const string &rhs) noexcept {
-        // TODO
+        return string_helper::strcmp(lhs.str_data, rhs.str_data) == -1;
     }
 
     bool operator<(const uint8_t *lhs, const string &rhs) {
-        // TODO
+        return string_helper::strcmp(lhs, rhs.str_data) == -1;
     }
 
     bool operator<(const string &lhs, const uint8_t *rhs) {
-        // TODO
+        return string_helper::strcmp(lhs.str_data, rhs) == -1;
     }
 
     bool operator<=(const string &lhs, const string &rhs) noexcept {
-        // TODO
+        return string_helper::strcmp(lhs.str_data, rhs.str_data) <= 0;
     }
 
     bool operator<=(const uint8_t *lhs, const string &rhs) {
-        // TODO
+        return string_helper::strcmp(lhs, rhs.str_data) <= 0;
     }
 
     bool operator<=(const string &lhs, const uint8_t *rhs) {
-        // TODO
+        return string_helper::strcmp(lhs.str_data, rhs) <= 0;
     }
 
     bool operator>(const string &lhs, const string &rhs) noexcept {
-        // TODO
+        return string_helper::strcmp(lhs.str_data, rhs.str_data) == 1;
     }
 
     bool operator>(const uint8_t *lhs, const string &rhs) {
-        // TODO
+        return string_helper::strcmp(lhs, rhs.str_data) == 1;
     }
 
     bool operator>(const string &lhs, const uint8_t *rhs) {
-        // TODO
+        return string_helper::strcmp(lhs.str_data, rhs) == 1;
     }
 
     bool operator>=(const string &lhs, const string &rhs) noexcept {
-        // TODO
+        return string_helper::strcmp(lhs.str_data, rhs.str_data) >= 0;
     }
 
     bool operator>=(const uint8_t *lhs, const string &rhs) {
-        // TODO
+        return string_helper::strcmp(lhs, rhs.str_data) >= 0;
     }
 
     bool operator>=(const string &lhs, const uint8_t *rhs) {
-        // TODO
+        return string_helper::strcmp(lhs.str_data, rhs) >= 0;
     }
 
 

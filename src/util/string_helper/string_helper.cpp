@@ -37,18 +37,27 @@ namespace string_helper {
         return p_string;
     }
 
-    bool strcmp(const uint8_t *first, const uint8_t *sec) {
+    int32_t strcmp(const uint8_t *first, const uint8_t *sec) {
         if (first == nullptr || sec == nullptr)
-            return false;
+            throw my_exception((uint8_t *) "Can't compare null value");
 
-        if (strlen(first) != strlen(sec))
-            return false;
+        int32_t min_len{strlen(first) > strlen(sec) ? strlen(sec) : strlen(first)};
 
-        for (int32_t i{0}; i < strlen(first); i++)
-            if (*(first + i) != *(sec + i))
-                return false;
+        int32_t checker{0};
+        for (int32_t i{0}; i < min_len; i++)
+            if (*(first + i) < *(sec + i)) {
+                checker = -1;
+                break;
+            } else if (*(first + i) > *(sec + i)) {
+                checker = 1;
+                break;
+            }
 
-        return true;
+        if (strlen(first) != strlen(sec) && checker == 0) {
+            checker = min_len == strlen(first) ? -1 : 1;
+        }
+
+        return checker;
     }
 
     int32_t strlen(const uint8_t *text) {

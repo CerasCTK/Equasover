@@ -10,7 +10,7 @@ namespace string_helper {
 
     uint8_t *strcat(uint8_t *destination, const uint8_t *source);
 
-    bool strcmp(const uint8_t *first, const uint8_t *sec);
+    int32_t strcmp(const uint8_t *first, const uint8_t *sec);
 
     int32_t strlen(const uint8_t *text);
 
@@ -19,6 +19,10 @@ namespace string_helper {
     int32_t count_char(const uint8_t *text, uint8_t character);
 
     int32_t pos(const uint8_t *text, uint8_t character);
+
+    uint8_t *num_to_text(int32_t number);
+
+    uint8_t *num_to_text(double number);
 }
 
 #endif
