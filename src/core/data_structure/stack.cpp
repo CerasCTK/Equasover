@@ -60,6 +60,13 @@ namespace da_st {
         return this->last_item_index + 1;
     }
 
+    template<class element_type>
+    void stack<element_type>::print() {
+        for (int32_t i{0}; i <= this->last_item_index; i++) {
+            std::cout << *(this->stack_array + i) << " ";
+        }
+    }
+
     template
     class stack<bool>;
 

@@ -29,6 +29,8 @@ namespace da_st {
         element_type top();
 
         int32_t size() const;
+
+        void print();
     };
 }
 
