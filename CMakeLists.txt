@@ -28,4 +28,8 @@ add_executable(
 
         src/core/data_type/string.cpp
         src/core/data_type/string.h
-        src/util/math_helper/math_helper.cpp src/util/math_helper/math_helper.h)
+
+        src/util/math_helper/math_helper.cpp
+        src/util/math_helper/math_helper.h
+
+        src/core/data_type/config/cloneable.h)
