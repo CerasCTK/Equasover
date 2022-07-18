@@ -9,14 +9,27 @@ void copy_array(type source, int32_t src_pos, type destination, int32_t des_pos,
 
 namespace da_st {
     template<class element_type>
-    array_list<element_type>::array_list() {
-        this->init_array_list(this->list_size);
+    void array_list<element_type>::resize() {
+        if ((this->list_size * 3 / 2 + 1) > MAX_SIZE_THRESHOLD)
+            throw my_exception(
+                    (uint8_t *) ("Unable to allocate memory for array (Arraylist size exceeds the allowable limit)"));
+
+        int32_t new_size{this->top_index * 3 / 2 + 1};
+        element_type *new_array{new element_type[new_size]};
+
+        copy_array(this->obj_list, 0, new_array, 0, this->top_index);
+
+        this->obj_list = new_array;
+        this->list_size = new_size;
     }
 
     template<class element_type>
-    array_list<element_type>::~array_list() {
-        if (this->obj_list != nullptr)
-            delete this->obj_list;
+    bool array_list<element_type>::need_to_resize() {
+        if (this->top_index == this->list_size - 2
+            || (this->top_index >= ARRAYLIST_DEFAULT_SIZE && this->top_index < list_size / 4))
+            return true;
+
+        return false;
     }
 
     template<class element_type>
@@ -28,29 +41,23 @@ namespace da_st {
     }
 
     template<class element_type>
-    void array_list<element_type>::resize() {
-        if ((this->list_size * 3 / 2 + 1) > MAX_SIZE_THRESHOLD)
-            throw my_exception(
-                    (uint8_t *) ("Unable to allocate memory for array (Arraylist size exceeds the allowable limit)"));
-
-        int32_t new_size{this->top_index * 3 / 2 + 1};
-        element_type *new_array{new element_type[new_size]};
-
-        copy_array(this->obj_list, 0, new_array, 0, this->top_index);
-
-        delete this->obj_list;
-
-        this->obj_list = new_array;
-        this->list_size = new_size;
+    array_list<element_type>::array_list() {
+        this->init_array_list(this->list_size);
     }
 
     template<class element_type>
-    bool array_list<element_type>::need_to_resize() {
-        if (this->top_index >= this->list_size - 1
-            || (this->top_index >= C_DEFAULT_SIZE && this->top_index < list_size / 4))
-            return true;
+    array_list<element_type>::array_list(std::initializer_list<element_type> il) {
+        this->init_array_list(il.size());
 
-        return false;
+        typename std::initializer_list<element_type>::iterator it;
+        for (it = il.begin(); it < il.end(); it++)
+            this->add(*it);
+    }
+
+    template<class element_type>
+    array_list<element_type>::~array_list() {
+        if (this->obj_list != nullptr)
+            delete this->obj_list;
     }
 
     template<class element_type>
@@ -130,6 +137,27 @@ namespace da_st {
 
         this->obj_list = new_arr;
         this->top_index -= 1;
+    }
+
+    template<class element_type>
+    void array_list<element_type>::remove_all(element_type obj) {
+        // TODO: fix error remove last index is 0
+        for (int32_t i{0}; i < this->top_index;) {
+            if (*(this->obj_list + i) == obj)
+                this->remove(i);
+            else
+                i++;
+        }
+    }
+
+    template<class element_type>
+    array_list<element_type> &array_list<element_type>::operator=(std::initializer_list<element_type> il) {
+        typename std::initializer_list<element_type>::iterator it;
+        for (it = il.begin(); it != il.end(); it++) {
+            this->add(*it);
+        }
+
+        return *this;
     }
 
     template

@@ -3,16 +3,18 @@
 #ifndef GENETICALGORITHM_ARRAY_LIST_H
 #define GENETICALGORITHM_ARRAY_LIST_H
 
+#include <initializer_list>
+
 #include <cstdint>
 
-#define C_DEFAULT_SIZE 10
+#define ARRAYLIST_DEFAULT_SIZE 10
 #define MAX_SIZE_THRESHOLD 1000
 
 namespace da_st {
     template<class element_type>
     class array_list {
     private:
-        int32_t list_size{C_DEFAULT_SIZE};
+        int32_t list_size{ARRAYLIST_DEFAULT_SIZE};
         element_type *obj_list;
 
         int32_t top_index{-1};
@@ -25,6 +27,8 @@ namespace da_st {
 
     public:
         array_list();
+
+        array_list(std::initializer_list<element_type> il);
 
         ~array_list();
 
@@ -45,6 +49,10 @@ namespace da_st {
         int32_t last_index_of(element_type obj);
 
         void remove(int32_t index);
+
+        void remove_all(element_type obj);
+
+        array_list &operator=(std::initializer_list<element_type> il);
     };
 }
 

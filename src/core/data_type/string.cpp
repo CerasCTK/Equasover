@@ -85,6 +85,20 @@ namespace da_ty {
         *(this->str_data + str_data_len - 1) = END_STRING_CHAR;
     }
 
+    string::string (std::initializer_list<uint8_t> il) {
+        std::initializer_list<uint8_t>::iterator it;
+
+        int32_t str_data_len = il.size() + END_STRING_COUNT;
+
+        this->str_data = new uint8_t[str_data_len];
+
+        int32_t index{0};
+        for (it = il.begin(); it != il.end(); it++, index++)
+            *(this->str_data + index) = *it;
+
+        *(this->str_data + str_data_len - 1) = END_STRING_CHAR;
+    }
+
     string::string(string &&str) noexcept {
         this->str_data = str.str_data;
         str.str_data = nullptr;
@@ -270,7 +284,6 @@ namespace da_ty {
     }
 
     string &string::append(const string &str, int32_t sub_pos, int32_t sub_len) {
-
         return *this;
         // TODO
     }
@@ -291,13 +304,11 @@ namespace da_ty {
     }
 
     string &string::append(const uint8_t *s, int32_t n) {
-
         return *this;
         // TODO
     }
 
     string &string::append(int32_t n, uint8_t c) {
-
         return *this;
         // TODO
     }
@@ -375,22 +386,27 @@ namespace da_ty {
     }
 
     int32_t string::copy(uint8_t *s, int32_t len, int32_t pos) const {
+        return 0;
         // TODO
     }
 
     int32_t string::find(const string &str, int32_t pos) const {
+        return 0;
         // TODO
     }
 
     int32_t string::find(const uint8_t *s, int32_t pos) const {
+        return 0;
         // TODO
     }
 
     int32_t string::find(const uint8_t *s, int32_t pos, int32_t n) const {
+        return 0;
         // TODO
     }
 
     int32_t string::find(uint8_t c, int32_t pos) const {
+        return 0;
         // TODO
     }
 
@@ -458,15 +474,52 @@ namespace da_ty {
     }
 
     string operator+(const uint8_t *lhs, const string &rhs) {
-        // TODO
+        int32_t new_len{string_helper::strlen(lhs) + rhs.length() + END_STRING_COUNT};
+
+        uint8_t *buff{new uint8_t[new_len]};
+
+        string_helper::strcpy(buff, lhs);
+        string_helper::strcat(buff, rhs.str_data);
+
+        buff[new_len - 1] = END_STRING_CHAR;
+
+        string temp(buff);
+
+        delete[] buff;
+
+        return temp;
     }
 
     string operator+(const string &lhs, uint8_t rhs) {
-        // TODO
+        int32_t new_len{lhs.length() + 1 + END_STRING_COUNT};
+
+        uint8_t *buff{new uint8_t[new_len]};
+
+        string_helper::strcpy(buff, lhs.str_data);
+        buff[new_len - 2] = rhs;
+        buff[new_len - 1] = END_STRING_CHAR;
+
+        string temp(buff);
+
+        delete[] buff;
+
+        return temp;
     }
 
     string operator+(uint8_t lhs, const string &rhs) {
-        // TODO
+        int32_t new_len{1 + rhs.length() + END_STRING_COUNT};
+
+        uint8_t *buff{new uint8_t[new_len]};
+
+        buff[0] = lhs;
+        string_helper::strcat(buff, rhs.str_data);
+        buff[new_len - 1] = END_STRING_CHAR;
+
+        string temp(buff);
+
+        delete[] buff;
+
+        return temp;
     }
 
     bool operator==(const string &lhs, const string &rhs) noexcept {
@@ -568,10 +621,34 @@ namespace da_ty {
         using namespace da_st;
         array_list<string> *list = new array_list<string>;
 
-        while (*(this->str_data) != '\0') {
+        string temp;
 
+        if (split_char == 0) {
+            for (int32_t i{0}; i < this->length(); i++) {
+                temp += *(this->str_data + i);
+                std::cout << temp << std::endl;
+                list->add(temp);
+                temp.clear();
+            }
+            return list;
         }
-        // TODO
+
+
+        for (int32_t i{0}; i < this->length(); i++) {
+            if (*(this->str_data + i) == split_char) {
+                if (!temp.empty())
+                    list->add(temp);
+                temp.clear();
+                continue;
+            }
+
+            temp += *(this->str_data + i);
+
+            if (i == this->length() - 1)
+                if (!temp.empty())
+                    list->add(temp);
+        }
+
         return list;
     }
 

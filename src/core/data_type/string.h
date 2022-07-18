@@ -37,6 +37,8 @@ namespace da_ty {
 
         string(int32_t n, uint8_t c);
 
+        string (std::initializer_list<uint8_t> il);
+
         string(string &&str) noexcept;
 
         ~string();

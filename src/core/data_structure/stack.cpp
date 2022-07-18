@@ -6,9 +6,8 @@
 
 namespace da_st {
     template<class element_type>
-    void stack<element_type>::init_stack(int32_t capacity) {
+    stack<element_type>::stack(int32_t capacity) {
         this->stack_capacity = capacity;
-        this->p_top = nullptr;
 
         this->stack_array = new element_type[capacity];
         if (this->stack_array == nullptr)
@@ -16,28 +15,20 @@ namespace da_st {
     }
 
     template<class element_type>
-    stack<element_type>::stack(int32_t capacity) {
-        this->init_stack(capacity);
-    }
-
-    template<class element_type>
     stack<element_type>::~stack() {
-        if (this->p_top != nullptr)
-            delete this->p_top;
-
-        if (this->stack_array != nullptr)
-            delete this->stack_array;
+//        if (this->stack_array != nullptr)
+//            delete this->stack_array;
     }
 
     template<class element_type>
-    bool stack<element_type>::is_empty() {
-        if (this->top_index == -1 || this->p_top == nullptr) return true;
+    bool stack<element_type>::empty() {
+        if (this->last_item_index == -1) return true;
         return false;
     }
 
     template<class element_type>
     bool stack<element_type>::is_full() {
-        if (this->top_index >= this->stack_capacity - 1) return true;
+        if (this->last_item_index == this->stack_capacity - 1) return true;
         return false;
     }
 
@@ -46,24 +37,27 @@ namespace da_st {
         if (this->is_full())
             throw my_exception((uint8_t *) ("Stack is full"));
 
-        this->stack_array[++this->top_index] = data;
-        this->p_top = &data;
+        this->stack_array[++this->last_item_index] = data;
     }
+
 
     template<class element_type>
     void stack<element_type>::pop() {
-        if (this->is_empty())
+        if (this->empty())
             throw my_exception((uint8_t *) ("Stack is empty"));
 
-        --this->top_index;
-        if (this->top_index < 0) this->p_top = nullptr;
-        else this->p_top = &this->stack_array[this->top_index];
+        --this->last_item_index;
     }
 
     template<class element_type>
     element_type stack<element_type>::top() {
-        if (this->is_empty()) throw my_exception((uint8_t *) ("Stack is empty"));
-        return *p_top;
+        if (this->empty()) throw my_exception((uint8_t *) ("Stack is empty"));
+        return *(this->stack_array + this->last_item_index);
+    }
+
+    template<class element_type>
+    int32_t stack<element_type>::size() const {
+        return this->last_item_index + 1;
     }
 
     template

@@ -9,19 +9,16 @@ namespace da_st {
     template<class element_type>
     class stack {
     private:
-        element_type *p_top;
-        int32_t top_index{-1};
+        int32_t last_item_index{-1};
         int32_t stack_capacity;
         element_type *stack_array;
 
-        void init_stack(int32_t capacity);
-
     public:
-        explicit stack(int32_t capacity);
+        stack(int32_t capacity);
 
         ~stack();
 
-        bool is_empty();
+        bool empty();
 
         bool is_full();
 
@@ -30,6 +27,8 @@ namespace da_st {
         void pop();
 
         element_type top();
+
+        int32_t size() const;
     };
 }
 

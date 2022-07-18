@@ -4,37 +4,49 @@
 
 #include "../../util/string_helper/string_helper.h"
 
+#define TEST std::cout << "test" << std::endl;
+
 namespace util {
-    polish_notation *polish_notation::get_polish() {
-        polish_notation *po_no{new polish_notation};
+    void polish_notation::str_to_polish_form() {
+        using namespace da_st;
+        using namespace da_ty;
 
-        return po_no;
-    }
+        array_list<string> *all_part_calculation = this->function_string->split(' ');
+        int32_t size_of_pc_list = all_part_calculation->size();
 
-    polish_notation *polish_notation::add_function(const uint8_t *function) {
-        const int32_t function_length{string_helper::strlen(function)};
+        stack<string> sign_stack(size_of_pc_list);
 
-        this->function_string = new uint8_t[function_length + 1];
+        this->function_polish_form = new stack<string>(size_of_pc_list);
 
-        string_helper::strcpy(this->function_string, function);
+        for (int32_t i{0}; i < size_of_pc_list; i++) {
+            if (this->sign_list.contains(all_part_calculation->get(i))) {
+//                if (all_part_calculation->get(i) == ((uint8_t *) (")"))) {
+//                    int32_t temp{i - 1};
+//                    while (all_part_calculation->get(temp) != ((uint8_t *) ("("))) {
+//                        this->function_polish_form->push(all_part_calculation->get(temp));
+//                        temp--;
+//                    }
+//                } else {
+                std::cout << "if: " << all_part_calculation->get(i) << std::endl;
+                    sign_stack.push(all_part_calculation->get(i));
+//                }
+            } else {
+                std::cout << "else: " << all_part_calculation->get(i) << std::endl;
+                this->function_polish_form->push(all_part_calculation->get(i));
+            }
+        }
 
-        return this;
-    }
+        while (!sign_stack.empty()) {
+            this->function_polish_form->push(sign_stack.top());
+            sign_stack.pop();
+        }
 
-    polish_notation *polish_notation::init_variable_list(const uint8_t *variables) {
-
-
-        return this;
-    }
-
-    double polish_notation::calculate() {
-        if (this->function_string == nullptr)
-            throw my_exception((uint8_t *) ("The function is null"));
-
-        if (this->variable_list == nullptr)
-            throw my_exception((uint8_t *) ("The variable list is null"));
-
-        return 0;
+        std::cout << "list: ";
+        for (int i{0}; i < this->function_polish_form->size(); i++) {
+            std::cout << this->function_polish_form->top() << " ";
+            this->function_polish_form->pop();
+        }
+        std::cout << std::endl;
     }
 
     polish_notation::~polish_notation() {
@@ -46,5 +58,44 @@ namespace util {
 
         if (this->function_polish_form != nullptr)
             delete this->function_polish_form;
+    }
+
+    polish_notation *polish_notation::get_polish() {
+        return new polish_notation;
+    }
+
+    polish_notation *polish_notation::add_function(const uint8_t *function) {
+        this->function_string = new da_ty::string(function);
+        this->str_to_polish_form();
+        return this;
+    }
+
+    polish_notation *polish_notation::init_variable_list(const uint8_t *variables) {
+        this->variable_list = new da_ty::string(variables);
+        return this;
+    }
+
+    void polish_notation::print_polish_form() {
+        da_ty::string polish_form_str;
+
+        std::cout << "size: " << this->function_polish_form->size() << std::endl;
+
+        for (int32_t i{0}; i < this->function_polish_form->size(); i++) {
+            polish_form_str += this->function_polish_form->top();
+            polish_form_str += ((uint8_t) ' ');
+            this->function_polish_form->pop();
+        }
+
+        std::cout << "Polish form str: " << polish_form_str << std::endl;
+    }
+
+    double polish_notation::calculate() {
+        if (this->function_string == nullptr)
+            throw my_exception((uint8_t *) ("The function is null"));
+
+        if (this->variable_list == nullptr)
+            throw my_exception((uint8_t *) ("The variable list is null"));
+
+        return 0;
     }
 }
