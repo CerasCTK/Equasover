@@ -32,4 +32,10 @@ add_executable(
         src/util/math_helper/math_helper.cpp
         src/util/math_helper/math_helper.h
 
-        src/core/data_type/config/cloneable.h)
+        src/core/data_type/config/cloneable.h
+
+        src/genetic-algorithm/operator_system/operator_manager.cpp
+        src/genetic-algorithm/operator_system/operator_manager.h
+
+        src/genetic-algorithm/operator_system/base/base_ope.cpp
+        src/genetic-algorithm/operator_system/base/base_ope.h)
