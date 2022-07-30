@@ -16,8 +16,6 @@ namespace da_st {
 
     template<class element_type>
     stack<element_type>::~stack() {
-//        if (this->stack_array != nullptr)
-//            delete this->stack_array;
     }
 
     template<class element_type>
