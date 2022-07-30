@@ -4,6 +4,8 @@
 
 #include "../data_type/string.h"
 
+#include "../../genetic-algorithm/operator_system/base/base_ope.h"
+
 template<class type>
 void copy_array(type source, int32_t src_pos, type destination, int32_t des_pos, int32_t length);
 
@@ -17,7 +19,7 @@ namespace da_st {
         int32_t new_size{this->top_index * 3 / 2 + 1};
         element_type *new_array{new element_type[new_size]};
 
-        copy_array(this->obj_list, 0, new_array, 0, this->top_index);
+        copy_array(this->obj_list, 0, new_array, 0, this->top_index + 1);
 
         this->obj_list = new_array;
         this->list_size = new_size;
@@ -83,9 +85,6 @@ namespace da_st {
 
     template<class element_type>
     void array_list<element_type>::clear() {
-        if (this->obj_list != nullptr)
-            delete this->obj_list;
-
         this->top_index = -1;
 
         this->init_array_list(this->list_size);
@@ -213,6 +212,9 @@ namespace da_st {
 
     template
     class array_list<da_ty::string *>;
+
+    template
+    class array_list<base_ope>;
 }
 
 template<class type>
