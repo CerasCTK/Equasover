@@ -138,6 +138,24 @@ namespace da_st {
         this->top_index -= 1;
     }
 
+/*
+     * CODE TEST REMOVE ALL (ERROR)
+     *
+        array_list<int> test = {1, 2, 3, 1, 4, 5, 1, 3, 5};
+
+        for (int sign_index{0}; sign_index < test.size(); sign_index++) {
+            std::cout << test.get(sign_index) << std::endl;
+        }
+
+        std::cout << std::endl;
+
+        test.remove_all(1);
+
+        for (int sign_index{0}; sign_index < test.size(); sign_index++) {
+            std::cout << test.get(sign_index) << std::endl;
+    }
+*/
+
     template<class element_type>
     void array_list<element_type>::remove_all(element_type obj) {
         // TODO: fix error remove last index is 0

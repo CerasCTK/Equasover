@@ -92,24 +92,28 @@ void genetic_algorithm::evaluate() {
 }
 
 void genetic_algorithm::selection() {
-    double *sort_list{new double[this->population_size]};
-
-    for (int32_t i{0}; i < this->population_size; i++)
-        *(sort_list + i) = *(this->max_storage + i);
+    double *max_temp_list{new double[this->population_size]};
+    double *min_temp_list{new double[this->population_size]};
 
     int32_t selection_threshold = this->population_size * 80 / 100; // 80%
 
-    sort(sort_list, this->population_size, descending_sort);
-    double max_threshold{*(sort_list + selection_threshold)};
+    for (int32_t i{0}; i < this->population_size; i++)
+        *(max_temp_list + i) = *(this->max_storage + i);
 
-    sort(sort_list, this->population_size, ascending_sort);
-    double min_threshold{*(sort_list + selection_threshold)};
+    sort(max_temp_list, this->population_size, descending_sort);
+    double max_threshold{*(max_temp_list + selection_threshold)};
+
+    for (int32_t i{0}; i < this->population_size; i++)
+        *(min_temp_list + i) = *(this->min_storage + i);
+
+    sort(min_temp_list, this->population_size, ascending_sort);
+    double min_threshold{*(min_temp_list + selection_threshold)};
 
     for (int32_t i{0}; i < this->population_size; i++) {
         if (*(this->max_storage + i) < max_threshold) {
             max_generation[i] = max_generation[math_helper::random_int_number(0, this->population_size)];
         }
-        if (*(this->max_storage + i) > min_threshold) {
+        if (*(this->min_storage + i) > min_threshold) {
             min_generation[i] = min_generation[math_helper::random_int_number(0, this->population_size)];
         }
     }
@@ -117,11 +121,6 @@ void genetic_algorithm::selection() {
 }
 
 void genetic_algorithm::cross_over() {
-    double *temp_list{new double[this->population_size]};
-
-    for (int32_t i{0}; i < this->population_size; i++)
-        *(temp_list + i) = *(this->max_storage + i);
-
     for (int32_t i{0}; i < this->num_crosses; i++) {
         int32_t dad{math_helper::random_int_number(0, this->population_size)};
         int32_t mom{math_helper::random_int_number(0, this->population_size)};
@@ -169,6 +168,24 @@ void genetic_algorithm::run_algorithm() {
         this->cross_over();
         this->mutation();
     }
+}
+
+void genetic_algorithm::show_output() {
+    double *max_temp_list{new double[this->population_size]};
+    double *min_temp_list{new double[this->population_size]};
+
+    for (int32_t i{0}; i < this->population_size; i++)
+        *(max_temp_list + i) = *(this->max_storage + i);
+
+    sort(max_temp_list, this->population_size, descending_sort);
+
+    for (int32_t i{0}; i < this->population_size; i++)
+        *(min_temp_list + i) = *(this->min_storage + i);
+
+    sort(min_temp_list, this->population_size, ascending_sort);
+
+    std::cout << "Max: " << max_temp_list[0] << std::endl;
+    std::cout << "Min: " << min_temp_list[0] << std::endl;
 }
 
 void sort(double *list, int32_t num_of_values, bool (*type)(double, double)) {

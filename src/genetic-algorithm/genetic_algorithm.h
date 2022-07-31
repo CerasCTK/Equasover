@@ -147,7 +147,15 @@ public:
      */
     void set_upper_threshold(double threshold);
 
+    /**
+     *
+     */
     void run_algorithm();
+
+    /**
+     *
+     */
+    void show_output();
 };
 
 #endif
