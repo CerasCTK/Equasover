@@ -21,14 +21,42 @@ using namespace math_helper;
 using namespace util;
 
 int main() {
-    polish_notation *po = polish_notation::get_polish();
-    po->add_function((uint8_t *) ("( x * y ) + sin ( z * 5 ^ t + 7 * 6 )"));
-    po->init_variable_list((uint8_t *) ("x y z t"));
+    string function, variables;
 
-    std::cout << po->calculate({3, 5, 6, 7});
+    std::cout << "Input function: ";
+    function.get_line();
+    std::cout << "Input variables: ";
+    variables.get_line();
+
+    genetic_algorithm *genetic_algorithm{genetic_algorithm::init_ga()};
+
+    genetic_algorithm->add_function(function);
+    genetic_algorithm->add_variable(variables);
+
+    double lower_threshold, upper_threshold;
+
+    std::cout << "Input lower and upper threshold: ";
+    std::cin >> lower_threshold >> upper_threshold;
+
+    genetic_algorithm->set_lower_threshold(lower_threshold);
+    genetic_algorithm->set_upper_threshold(upper_threshold);
+
+    genetic_algorithm->init_population();
+    genetic_algorithm->evaluate();
+
+
 
     return 0;
 }
+//polish_notation *po = polish_notation::get_polish();
+//
+//    po->add_function((uint8_t *) "x + y + z");
+//    po->init_variable_list((uint8_t *) "x y z");
+//
+//    array_list<double> temp = {1, 2, 3};
+//
+//    std::cout << po->calculate(temp);
+
 
 /*
      * CODE TEST REMOVE ALL (ERROR)

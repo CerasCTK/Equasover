@@ -29,15 +29,21 @@ namespace math_helper {
      */
     double sqrt(double n);
 
-    /***
+    /**
      *
-     * @param n
-     * @param max_denominator
+     * @param lower_threshold
+     * @param upper_threshold
      * @return
      */
-    int32_t *decimal_to_fraction(double n, int32_t max_denominator);
+    double random_number(double lower_threshold, double upper_threshold);
 
-
+    /**
+     *
+     * @param lower_threshold
+     * @param upper_threshold
+     * @return
+     */
+    int32_t random_int_number(int32_t lower_threshold, int32_t upper_threshold);
 }
 
 #endif

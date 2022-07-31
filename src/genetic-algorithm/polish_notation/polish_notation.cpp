@@ -47,15 +47,11 @@ namespace util {
         }
     }
 
-    void polish_notation::replace_value(std::initializer_list<double> const &list_val) {
-        std::initializer_list<double>::iterator it;
-
-        it = list_val.begin();
-
+    void polish_notation::replace_value(da_st::array_list<double> &list_val) {
         for (int32_t i{0}; i < this->function_polish_form->size(); i++) {
             if (this->variable_arraylist->contains(this->function_polish_form->get(i))) {
                 this->function_polish_form->get(i) = string_helper::num_to_string(
-                        *(it + this->variable_arraylist->index_of(this->function_polish_form->get(i))));
+                        list_val.get(this->variable_arraylist->index_of(this->function_polish_form->get(i))));
             }
         }
     }
@@ -94,7 +90,14 @@ namespace util {
         return this;
     }
 
-    double polish_notation::calculate(std::initializer_list<double> const &list_val) {
+    int32_t polish_notation::get_number_of_variables() {
+        if (this->variable_arraylist == nullptr || this->variable_arraylist->size() == 0)
+            throw my_exception((uint8_t *) ("Please init variables list"));
+
+        return this->variable_arraylist->size();
+    }
+
+    double polish_notation::calculate(da_st::array_list<double> &list_val) {
         if (this->function_string == nullptr)
             throw my_exception((uint8_t *) ("The function is null"));
 
