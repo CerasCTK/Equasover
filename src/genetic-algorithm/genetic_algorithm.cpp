@@ -1,5 +1,7 @@
 #include "genetic_algorithm.h"
 
+#include <unistd.h>
+
 #include "../util/math_helper/math_helper.h"
 
 #include "../core/data_structure/array_list.h"
@@ -70,10 +72,10 @@ void genetic_algorithm::init_population() {
 
         for (int32_t j{0}; j < this->num_var; j++) {
             this->max_generation[i][j] = math_helper::random_number(this->lower_threshold, this->upper_threshold);
+            sleep(5);
             this->min_generation[i][j] = math_helper::random_number(this->lower_threshold, this->upper_threshold);
         }
     }
-
 }
 
 void genetic_algorithm::evaluate() {

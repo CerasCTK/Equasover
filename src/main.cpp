@@ -4,6 +4,8 @@
 
 #include "core/data_type/string.h"
 
+#include "util/math_helper/math_helper.h"
+
 using namespace da_ty;
 
 using namespace util;
@@ -31,6 +33,8 @@ int main() {
 
     genetic_algorithm->run_algorithm();
     genetic_algorithm->show_output();
+
+
 
     return 0;
 }
