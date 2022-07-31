@@ -1,48 +1,51 @@
 #include <iostream>
 
 #include "util/string_helper/string_helper.h"
+#include "util/math_helper/math_helper.h"
+#include "core/data_type/string.h"
+#include "core/data_structure/stack.h"
+#include "core/data_structure/array_list.h"
+#include "core/exception/my_exception.h"
+
+#include "genetic-algorithm/polish_notation/polish_notation.h"
+#include "genetic-algorithm/genetic_algorithm.h"
+
+#include "genetic-algorithm/operator_system/operator_manager.h"
+
+using namespace da_ty;
+using namespace da_st;
+
+using namespace string_helper;
+using namespace math_helper;
+
+using namespace util;
 
 int main() {
-    long m[2][2];
-    double x, startx;
-    long maxden;
-    long ai;
+    polish_notation *po = polish_notation::get_polish();
+    po->add_function((uint8_t *) ("( x * y ) + sin ( z * 5 ^ t + 7 * 6 )"));
+    po->init_variable_list((uint8_t *) ("x y z t"));
 
-    /* read command line arguments */
-    startx = x = 0.125;
-    maxden = 100;
+    std::cout << po->calculate({3, 5, 6, 7});
 
-    /* initialize matrix */
-    m[0][0] = m[1][1] = 1;
-    m[0][1] = m[1][0] = 0;
-
-    /* loop finding terms until denom gets too big */
-    while (m[1][0] *  ( ai = (long)x ) + m[1][1] <= maxden) {
-        long t;
-        t = m[0][0] * ai + m[0][1];
-        m[0][1] = m[0][0];
-        m[0][0] = t;
-        t = m[1][0] * ai + m[1][1];
-        m[1][1] = m[1][0];
-        m[1][0] = t;
-        if(x==(double)ai) break;     // AF: division by zero
-        x = 1/(x - (double) ai);
-        if(x>(double)0x7FFFFFFF) break;  // AF: representation failure
-    }
-
-    /* now remaining x is between 0 and 1/ai */
-    /* approx as either 0 or 1/m where m is max that will fit in maxden */
-    /* first try zero */
-    printf("%ld/%ld, error = %e\n", m[0][0], m[1][0],
-           startx - ((double) m[0][0] / (double) m[1][0]));
-
-    /* now try other possibility */
-    ai = (maxden - m[1][1]) / m[1][0];
-    m[0][0] = m[0][0] * ai + m[0][1];
-    m[1][0] = m[1][0] * ai + m[1][1];
-    printf("%ld/%ld, error = %e\n", m[0][0], m[1][0],
-           startx - ((double) m[0][0] / (double) m[1][0]));
     return 0;
 }
+
+/*
+     * CODE TEST REMOVE ALL (ERROR)
+     *
+        array_list<int> test = {1, 2, 3, 1, 4, 5, 1, 3, 5};
+
+        for (int sign_index{0}; sign_index < test.size(); sign_index++) {
+            std::cout << test.get(sign_index) << std::endl;
+        }
+
+        std::cout << std::endl;
+
+        test.remove_all(1);
+
+        for (int sign_index{0}; sign_index < test.size(); sign_index++) {
+            std::cout << test.get(sign_index) << std::endl;
+    }
+*/
 
 

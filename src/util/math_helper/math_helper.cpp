@@ -2,8 +2,6 @@
 
 #include "../../core/exception/my_exception.h"
 
-#include "../string_helper/string_helper.h"
-
 namespace math_helper {
     double abs(double n) {
         return ((n >= 0) ? n : -n);
@@ -81,42 +79,5 @@ namespace math_helper {
 //               startx - ((double) m[0][0] / (double) m[1][0]));
 
         return new int32_t;
-    }
-
-    double text_to_num(uint8_t *s) {
-        int32_t num_len{string_helper::strlen(s)};
-
-        int32_t point_index{0};
-
-        double output{0};
-
-        bool negative_num = (*(s + 0) == 45);
-
-        int32_t counter{negative_num ? 1 : 0};
-
-        for (; counter < num_len; counter++) {
-            if (*(s + counter) == 46) {
-                point_index = counter;
-                continue;
-            }
-            output *= 10;
-            output += char_to_int(*(s + counter));
-        }
-
-        int32_t power_of = num_len - point_index - 1;
-        for (int32_t i{0}; i < power_of; i++)
-            output /= 10;
-
-        if (negative_num)
-            output *= -1;
-
-        return output;
-    }
-
-    int32_t char_to_int(uint8_t c) {
-        if (c < 48 || c > 57)
-            throw my_exception((uint8_t *) ("This character is not a number"));
-
-        return c - 48;
     }
 }

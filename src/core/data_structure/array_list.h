@@ -80,7 +80,7 @@ namespace da_st {
          * @param index - element's index
          * @return an element in array
          */
-        element_type get(int32_t index);
+        element_type &get(int32_t index);
 
         /**
          * Delete all values of array

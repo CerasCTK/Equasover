@@ -77,7 +77,7 @@ namespace da_st {
     }
 
     template<class element_type>
-    element_type array_list<element_type>::get(int32_t index) {
+    element_type &array_list<element_type>::get(int32_t index) {
         if (index > this->top_index) throw my_exception((uint8_t *) ("Index out of bound"));
 
         return *(this->obj_list + index);
@@ -92,7 +92,7 @@ namespace da_st {
 
     template<class element_type>
     bool array_list<element_type>::contains(element_type obj) {
-        for (int32_t i{0}; i < this->top_index; i++)
+        for (int32_t i{0}; i <= this->top_index; i++)
             if (*(this->obj_list + i) == obj)
                 return true;
 
@@ -101,7 +101,7 @@ namespace da_st {
 
     template<class element_type>
     int32_t array_list<element_type>::index_of(element_type obj) {
-        for (int32_t i{0}; i < this->top_index; i++)
+        for (int32_t i{0}; i <= this->top_index; i++)
             if (*(this->obj_list + i) == obj) return i;
         return -1;
     }
@@ -124,15 +124,15 @@ namespace da_st {
         if (index > this->top_index || index < 0)
             throw my_exception((uint8_t *) ("Index out of bound"));
 
-        int32_t new_arr_length{this->top_index - 1};
+        int32_t new_arr_length{this->size() - 1};
         element_type *new_arr{new element_type[new_arr_length]};
 
         copy_array(this->obj_list, 0, new_arr, 0, index);
 
-        int32_t num_of_remaining_elements{this->top_index - index - 1};
+        int32_t num_of_remaining_elements{this->size() - index - 1};
         copy_array(this->obj_list, index + 1, new_arr, index, num_of_remaining_elements);
 
-        delete this->obj_list;
+//        delete this->obj_list;
 
         this->obj_list = new_arr;
         this->top_index -= 1;

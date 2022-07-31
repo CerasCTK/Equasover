@@ -14,37 +14,49 @@
 
 class operator_manager {
 private:
-    da_st::array_list<base_ope> operator_list{da_st::array_list<base_ope>()};
+    /**
+     *
+     */
+    da_st::array_list<base_ope> *operator_list{new da_st::array_list<base_ope>()};
 
-    /***
+    /**
      *
      */
     void init_operator_list();
 
-    /***
+    /**
+     *
+     * @param cal
+     * @return
+     */
+    friend base_ope get_ope_from_fun(calculator cal);
+
+    /**
      *
      */
     operator_manager() = default;
 
 public:
-    /***
+    /**
      *
      * @return
      */
     static operator_manager *get_operator_manager();
 
-    /***
+    /**
      *
      * @param sign
      * @return
      */
     base_ope get_operator(da_ty::string sign);
 
-    /***
+    /**
      *
      * @return
      */
     da_st::array_list<da_ty::string> *get_sign_list();
+
+    da_st::array_list<base_ope> *get_ope_list();
 };
 
 #endif

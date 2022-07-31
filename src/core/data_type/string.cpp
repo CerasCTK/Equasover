@@ -626,13 +626,11 @@ namespace da_ty {
         if (split_char == 0) {
             for (int32_t i{0}; i < this->length(); i++) {
                 temp += *(this->str_data + i);
-                std::cout << temp << std::endl;
                 list->add(temp);
                 temp.clear();
             }
             return list;
         }
-
 
         for (int32_t i{0}; i < this->length(); i++) {
             if (*(this->str_data + i) == split_char) {
@@ -644,9 +642,10 @@ namespace da_ty {
 
             temp += *(this->str_data + i);
 
-            if (i == this->length() - 1)
+            if (i == this->length() - 1) {
                 if (!temp.empty())
                     list->add(temp);
+            }
         }
 
         return list;

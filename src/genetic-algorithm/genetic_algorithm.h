@@ -7,13 +7,27 @@
 
 class genetic_algorithm {
 private:
+    /**
+     *
+     */
     genetic_algorithm() = default;
 
 public:
+    /**
+     *
+     * @return
+     */
     static genetic_algorithm *init_ga();
 
+    /**
+     *
+     * @return
+     */
     genetic_algorithm *init_population();
 
+    /**
+     *
+     */
     ~genetic_algorithm();
 };
 
