@@ -34,8 +34,6 @@ int main() {
     genetic_algorithm->run_algorithm();
     genetic_algorithm->show_output();
 
-
-
     return 0;
 }
 
