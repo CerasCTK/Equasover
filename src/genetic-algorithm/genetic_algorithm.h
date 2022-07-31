@@ -30,6 +30,11 @@ private:
     int32_t num_evo;
 
     /**
+     * Number of crosses
+     */
+    int32_t num_crosses;
+
+    /**
      *
      */
     double lower_threshold;
@@ -40,23 +45,53 @@ private:
     double upper_threshold;
 
     /**
-     * Array containing the set of values
+     * Array containing the set of values (max)
      */
-    double **generation;
+    double **max_generation;
+
+    /**
+     * Array containing the set of values (min)
+     */
+    double **min_generation;
 
     /**
      * Array to filter maximum value
      */
-    double *max_sto;
+    double *max_storage;
     /**
      * Array to filter minimum value
      */
-    double *min_sto;
+    double *min_storage;
 
     /**
      * Constructor
      */
     genetic_algorithm() = default;
+
+    /**
+     * Population initialization
+     */
+    void init_population();
+
+    /**
+     *
+     */
+    void evaluate();
+
+    /**
+     *
+     */
+    void selection();
+
+    /**
+     *
+     */
+    void cross_over();
+
+    /**
+     *
+     */
+    void mutation();
 
 public:
     /**
@@ -96,6 +131,12 @@ public:
 
     /**
      *
+     * @param crosses
+     */
+    void set_num_crosses(double crosses);
+
+    /**
+     *
      * @param threshold
      */
     void set_lower_threshold(double threshold);
@@ -106,25 +147,7 @@ public:
      */
     void set_upper_threshold(double threshold);
 
-    /**
-     * Population initialization
-     */
-    void init_population();
-
-    /**
-     *
-     */
-    void evaluate();
-
-    /**
-     *
-     */
-    void selection();
-
-    /**
-     *
-     */
-    void cross_over();
+    void run_algorithm();
 };
 
 #endif

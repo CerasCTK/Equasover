@@ -41,10 +41,7 @@ int main() {
     genetic_algorithm->set_lower_threshold(lower_threshold);
     genetic_algorithm->set_upper_threshold(upper_threshold);
 
-    genetic_algorithm->init_population();
-    genetic_algorithm->evaluate();
-
-
+    genetic_algorithm->run_algorithm();
 
     return 0;
 }

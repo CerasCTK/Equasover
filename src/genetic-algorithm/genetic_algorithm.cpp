@@ -26,23 +26,33 @@ void genetic_algorithm::add_variable(da_ty::string variables) {
     this->num_var = po_no->get_number_of_variables();
 
     this->population_size = 100 + 10 * this->num_var;
-    this->generation = new double*[this->population_size];
-    this->max_sto = new double[this->population_size];
-    this->min_sto = new double[this->population_size];
+
+    this->max_generation = new double*[this->population_size];
+    this->min_generation = new double*[this->population_size];
+
+    this->max_storage = new double[this->population_size];
+    this->min_storage = new double[this->population_size];
 
     this->num_evo = 100 + 10 * num_var;
+    this->num_crosses = this->population_size / 5;
 }
 
 void genetic_algorithm::set_population_size(double size) {
     this->population_size = size;
 
-    this->generation = new double*[this->population_size];
-    this->max_sto = new double[this->population_size];
-    this->min_sto = new double[this->population_size];
+    this->max_generation = new double*[this->population_size];
+    this->min_generation = new double*[this->population_size];
+
+    this->max_storage = new double[this->population_size];
+    this->min_storage = new double[this->population_size];
 }
 
 void genetic_algorithm::set_num_evo(double nums) {
     this->num_evo = nums;
+}
+
+void genetic_algorithm::set_num_crosses(double crosses) {
+    this->num_crosses = crosses;
 }
 
 void genetic_algorithm::set_lower_threshold(double threshold) {
@@ -55,31 +65,110 @@ void genetic_algorithm::set_upper_threshold(double threshold) {
 
 void genetic_algorithm::init_population() {
     for (int32_t i{0}; i < this->population_size; i++) {
-        this->generation[i] = new double[num_var];
+        this->max_generation[i] = new double[num_var];
+        this->min_generation[i] = new double[num_var];
 
-        for (int32_t j{0}; j < this->num_var; j++)
-            this->generation[i][j] = math_helper::random_number(this->lower_threshold, this->upper_threshold);
+        for (int32_t j{0}; j < this->num_var; j++) {
+            this->max_generation[i][j] = math_helper::random_number(this->lower_threshold, this->upper_threshold);
+            this->min_generation[i][j] = math_helper::random_number(this->lower_threshold, this->upper_threshold);
+        }
     }
+
 }
 
 void genetic_algorithm::evaluate() {
     for (int32_t i{0}; i < this->population_size; i++) {
-        da_st::array_list<double> values;
+        da_st::array_list<double> max_values;
+        da_st::array_list<double> min_values;
 
-        for (int32_t j{0}; j < this->num_var; j++)
-            values.add(this->generation[i][j]);
+        for (int32_t j{0}; j < this->num_var; j++) {
+            max_values.add(this->max_generation[i][j]);
+            min_values.add(this->min_generation[i][j]);
+        }
 
-        this->max_sto[i] = po_no->calculate(values);
-        this->min_sto[i] = po_no->calculate(values);
+        this->max_storage[i] = po_no->calculate(max_values);
+        this->min_storage[i] = po_no->calculate(min_values);
     }
 }
 
 void genetic_algorithm::selection() {
+    double *sort_list{new double[this->population_size]};
+
+    for (int32_t i{0}; i < this->population_size; i++)
+        *(sort_list + i) = *(this->max_storage + i);
+
+    int32_t selection_threshold = this->population_size * 80 / 100; // 80%
+
+    sort(sort_list, this->population_size, descending_sort);
+    double max_threshold{*(sort_list + selection_threshold)};
+
+    sort(sort_list, this->population_size, ascending_sort);
+    double min_threshold{*(sort_list + selection_threshold)};
+
+    for (int32_t i{0}; i < this->population_size; i++) {
+        if (*(this->max_storage + i) < max_threshold) {
+            max_generation[i] = max_generation[math_helper::random_int_number(0, this->population_size)];
+        }
+        if (*(this->max_storage + i) > min_threshold) {
+            min_generation[i] = min_generation[math_helper::random_int_number(0, this->population_size)];
+        }
+    }
 
 }
 
 void genetic_algorithm::cross_over() {
+    double *temp_list{new double[this->population_size]};
 
+    for (int32_t i{0}; i < this->population_size; i++)
+        *(temp_list + i) = *(this->max_storage + i);
+
+    for (int32_t i{0}; i < this->num_crosses; i++) {
+        int32_t dad{math_helper::random_int_number(0, this->population_size)};
+        int32_t mom{math_helper::random_int_number(0, this->population_size)};
+
+        for (int32_t j{0}; j < this->num_var; j++) {
+            if (math_helper::random_int_number(0, 2)) {
+                double temp{this->max_generation[dad][j]};
+                this->max_generation[dad][j] = this->max_generation[mom][j];
+                this->max_generation[mom][j] = temp;
+            }
+        }
+    }
+
+    for (int32_t i{0}; i < this->num_crosses; i++) {
+        int32_t dad{math_helper::random_int_number(0, this->population_size)};
+        int32_t mom{math_helper::random_int_number(0, this->population_size)};
+
+        for (int32_t j{0}; j < this->num_var; j++) {
+            if (math_helper::random_int_number(0, 2)) {
+                double temp{this->min_generation[dad][j]};
+                this->min_generation[dad][j] = this->min_generation[mom][j];
+                this->min_generation[mom][j] = temp;
+            }
+        }
+    }
+}
+
+void genetic_algorithm::mutation() {
+    int32_t max_index{math_helper::random_int_number(0, this->population_size)};
+    int32_t min_index{math_helper::random_int_number(0, this->population_size)};
+
+    int32_t max_bit{math_helper::random_int_number(0, this->num_var)};
+    int32_t min_bit{math_helper::random_int_number(0, this->num_var)};
+
+    this->max_generation[max_index][max_bit] = math_helper::random_number(lower_threshold, upper_threshold);
+    this->min_generation[min_index][min_bit] = math_helper::random_number(lower_threshold, upper_threshold);
+}
+
+void genetic_algorithm::run_algorithm() {
+    this->init_population();
+
+    for (int32_t i{0}; i < this->num_evo; i++) {
+        this->evaluate();
+        this->selection();
+        this->cross_over();
+        this->mutation();
+    }
 }
 
 void sort(double *list, int32_t num_of_values, bool (*type)(double, double)) {
@@ -94,5 +183,5 @@ bool ascending_sort(double first, double second) {
 }
 
 bool descending_sort(double first, double second) {
-    return first < second
+    return first < second;
 }

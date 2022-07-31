@@ -50,7 +50,7 @@ namespace math_helper {
     int32_t random_int_number(int32_t lower_threshold, int32_t upper_threshold) {
         srand(time(0));
 
-        int32_t scale{rand() % (upper_threshold - lower_threshold + 1)};
+        int32_t scale{rand() % (upper_threshold - lower_threshold)};
 
         return lower_threshold + scale;
     }
