@@ -57,7 +57,7 @@ namespace util {
          * Replace variables with values
          * @param list_val - list of values
          */
-        void replace_value(da_st::array_list<double> &list_val);
+        void replace_value(da_st::array_list<da_ty::string> *list, da_st::array_list<double> &list_val);
 
         /**
          * Convert variables string to array

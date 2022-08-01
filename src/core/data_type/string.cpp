@@ -309,6 +309,23 @@ namespace da_ty {
     }
 
     string &string::append(int32_t n, uint8_t c) {
+        int32_t new_len{this->length() + 1 + END_STRING_COUNT};
+
+        uint8_t *buff{new uint8_t[new_len]};
+
+        for(int32_t i{0}; i < n; i++) {
+            *(buff + i) = this->at(i);
+        }
+
+        *(buff + n) = c;
+
+        for (int32_t i{n + 1}; i < new_len - 1; i++)
+            *(buff + i) = this->at(i - 1);
+
+        buff[new_len - 1] = END_STRING_CHAR;
+
+        this->str_data = buff;
+
         return *this;
         // TODO
     }

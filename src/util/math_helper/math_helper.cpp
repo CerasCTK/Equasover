@@ -39,19 +39,20 @@ namespace math_helper {
         }
     }
 
-    double random_number(double lower_threshold, double upper_threshold) {
-        srand(time(0));
+    template<typename Numeric, typename Generator>
+    Numeric random(Numeric from, Numeric to) {
+        thread_local static Generator gen(std::random_device{}());
 
-        double scale = rand() / (double) RAND_MAX;
+        using dist_type = typename std::conditional<std::is_integral<Numeric>::value, std::uniform_int_distribution<Numeric>, std::uniform_real_distribution<Numeric>>::type;
 
-        return lower_threshold + scale * (upper_threshold - lower_threshold);
+        thread_local static dist_type dist;
+
+        return dist(gen, typename dist_type::param_type{from, to});
     }
 
-    int32_t random_int_number(int32_t lower_threshold, int32_t upper_threshold) {
-        srand(time(0));
+    template
+    int32_t random<int32_t, std::mt19937>(int32_t, int32_t);
 
-        int32_t scale{rand() % (upper_threshold - lower_threshold)};
-
-        return lower_threshold + scale;
-    }
+    template
+    double random<double, std::mt19937>(double, double);
 }

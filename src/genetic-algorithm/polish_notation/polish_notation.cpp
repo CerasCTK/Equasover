@@ -47,11 +47,11 @@ namespace util {
         }
     }
 
-    void polish_notation::replace_value(da_st::array_list<double> &list_val) {
-        for (int32_t i{0}; i < this->function_polish_form->size(); i++) {
-            if (this->variable_arraylist->contains(this->function_polish_form->get(i))) {
-                this->function_polish_form->get(i) = string_helper::num_to_string(
-                        list_val.get(this->variable_arraylist->index_of(this->function_polish_form->get(i))));
+    void polish_notation::replace_value(da_st::array_list<da_ty::string> *list, da_st::array_list<double> &list_val) {
+        for (int32_t i{0}; i < list->size(); i++) {
+            if (this->variable_arraylist->contains(list->get(i))) {
+                list->get(i) = string_helper::num_to_string(
+                        list_val.get(this->variable_arraylist->index_of(list->get(i))));
             }
         }
     }
@@ -107,17 +107,22 @@ namespace util {
         if (list_val.size() < this->variable_arraylist->size())
             throw my_exception((uint8_t *) ("Insufficient number of values passed"));
 
-        this->replace_value(list_val);
+        da_st::array_list<da_ty::string> *list = new da_st::array_list<da_ty::string>;
+
+        for (int32_t i{0}; i < this->function_polish_form->size(); i++)
+            list->add(this->function_polish_form->get(i));
+
+        this->replace_value(list, list_val);
 
         int32_t scanner{0};
-        while (this->function_polish_form->size() > 1) {
-            if (this->sign_list->contains(this->function_polish_form->get(scanner))) {
-                base_ope ope = op_manager->get_operator(this->function_polish_form->get(scanner));
-                ope.get_calculator()(this->function_polish_form, scanner);
+        while (list->size() > 1) {
+            if (this->sign_list->contains(list->get(scanner))) {
+                base_ope ope = op_manager->get_operator(list->get(scanner));
+                ope.get_calculator()(list, scanner);
                 scanner = 0;
             } else scanner++;
         }
 
-        return string_helper::text_to_num(const_cast<uint8_t *>(this->function_polish_form->get(0).c_str()));
+        return string_helper::text_to_num(const_cast<uint8_t *>(list->get(0).c_str()));
     }
 }

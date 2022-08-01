@@ -9,7 +9,7 @@
 
 #include "../data_structure/array_list.h"
 
-#include "config/cloneable.h"
+#include "../config/cloneable.h"
 
 #define MAX_STRING_LENGTH_DEFAULT 1000
 

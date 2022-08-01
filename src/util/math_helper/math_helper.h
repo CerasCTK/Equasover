@@ -4,6 +4,7 @@
 #define GENETICALGORITHM_MATH_HELPER_H
 
 #include <cstdint>
+#include <random>
 
 #define SQRT_THRESHOLD 0.000000001
 
@@ -31,19 +32,14 @@ namespace math_helper {
 
     /**
      *
-     * @param lower_threshold
-     * @param upper_threshold
+     * @tparam Numeric
+     * @tparam Generator
+     * @param from
+     * @param to
      * @return
      */
-    double random_number(double lower_threshold, double upper_threshold);
-
-    /**
-     *
-     * @param lower_threshold
-     * @param upper_threshold
-     * @return
-     */
-    int32_t random_int_number(int32_t lower_threshold, int32_t upper_threshold);
+    template<typename Numeric, typename Generator = std::mt19937>
+    Numeric random(Numeric from, Numeric to);
 }
 
 #endif

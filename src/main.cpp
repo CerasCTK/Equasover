@@ -6,6 +6,8 @@
 
 #include "util/math_helper/math_helper.h"
 
+#include "util/string_helper/string_helper.h"
+
 using namespace da_ty;
 
 using namespace util;
@@ -30,6 +32,9 @@ int main() {
 
     genetic_algorithm->set_lower_threshold(lower_threshold);
     genetic_algorithm->set_upper_threshold(upper_threshold);
+
+    genetic_algorithm->set_population_size(20);
+    genetic_algorithm->set_num_evo(5);
 
     genetic_algorithm->run_algorithm();
     genetic_algorithm->show_output();

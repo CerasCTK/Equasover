@@ -6,7 +6,9 @@
 
 #include "../../core/exception/my_exception.h"
 
-#include "../../core/data_structure/stack.h"
+#include "../../core/data_structure/array_list.h"
+
+#include "../math_helper/math_helper.h"
 
 namespace string_helper {
     uint8_t *strcpy(uint8_t *destination, const uint8_t *source) {
@@ -167,28 +169,25 @@ namespace string_helper {
             num *= 10;
         }
 
+//        std::cout << "Num: " << num << std::endl;
+
         int32_t int_num{(int) num};
-        da_st::stack<int32_t> num_stack(100);
 
-        bool is_negative{false};
+        bool is_negative{int_num < 0};
+        int_num = math_helper::abs(int_num);
 
-        if (int_num < 0) {
-            is_negative = true;
-            int_num = -int_num;
-        }
-
+        da_st::array_list<int32_t> num_array;
         while (int_num) {
-            num_stack.push(int_num % 10);
+            num_array.add(int_num % 10);
             int_num /= 10;
         }
 
-        int32_t num_length{num_stack.size()};
+        int32_t num_length{num_array.size()};
         int32_t dot_index{num_length - dot_index_from_tail};
-        bool less_than_one{false};
-        if (dot_index == 0) {
-            num_length++;
-            dot_index++;
-            less_than_one = true;
+
+        if (dot_index <= 0) {
+            num_length += abs(dot_index) + 1;
+            dot_index += abs(dot_index) + 1;
         }
 
         if (is_negative) {
@@ -196,26 +195,22 @@ namespace string_helper {
             dot_index++;
         }
 
-        int32_t output_length{dot_index < num_length ? num_length + 1 + 1 : num_length + 1};
+        int32_t output_length{num_length};
+
+//        std::cout << "Output length: " << output_length << std::endl;
+//
+//        std::cout << "Array size: " << num_array.size() << std::endl;
 
         da_ty::string output(output_length, '0');
 
-        int32_t i{less_than_one
-                  ? is_negative ? 2 : 1
-                  : is_negative ? 1 : 0};
-
-        for (; !num_stack.empty(); i++) {
-            if (i == dot_index) {
-                output.at(i) = '.';
-                continue;
-            }
-            output.at(i) = int_to_char(num_stack.top());
-            num_stack.pop();
+        for (int32_t i{output_length - 1}, j{0}; j < num_array.size(); i--, j++) {
+//            std::cout << "j: " << j << std::endl;
+            output.at(i) = int_to_char(num_array.get(j));
+//            std::cout << "Output: " << output << std::endl;
         }
 
         if (is_negative) output.at(0) = '-';
-
-        output.at(output_length - 1) = '\0';
+        output.append(dot_index, '.');
 
         return output;
     }

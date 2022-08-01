@@ -37,6 +37,11 @@ private:
     /**
      *
      */
+    int32_t selection_threshold;
+
+    /**
+     *
+     */
     double lower_threshold;
 
     /**
@@ -72,6 +77,11 @@ private:
      * Population initialization
      */
     void init_population();
+
+    /**
+     *
+     */
+    void setup_value_from_population_size();
 
     /**
      *
@@ -134,6 +144,12 @@ public:
      * @param crosses
      */
     void set_num_crosses(double crosses);
+
+    /**
+     *
+     * @param threshold
+     */
+    void set_selection_threshold(int32_t threshold);
 
     /**
      *
